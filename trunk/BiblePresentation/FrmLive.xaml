@@ -1,0 +1,59 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	xmlns:Microsoft_Windows_Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic" xmlns:LiveBiblePresentation="clr-namespace:LiveBiblePresentation"
+	xmlns:d="http://schemas.microsoft.com/expression/blend/2006" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
+	xmlns:LiveBiblePresentation_ValueConverters="clr-namespace:LiveBiblePresentation.ValueConverters"
+	x:Class="LiveBiblePresentation.FrmLive"
+	x:Name="Window"
+	Title="" AllowsTransparency="True" WindowState="Normal" WindowStyle="None" ShowInTaskbar="False" Background="#FF000000" Margin="0,0,0,0" Padding="0,0,0,0" Width="800" Height="600">
+
+	<Window.Resources>
+		<LiveBiblePresentation_ValueConverters:PathToImageConverter x:Key="PathToImageConverter"/>
+		<LiveBiblePresentation_ValueConverters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
+		<ObjectDataProvider x:Key="FrmLiveSettingsDS" d:IsDataSource="True" ObjectType="{x:Type LiveBiblePresentation:FrmLiveSettings}"/>
+		<Storyboard x:Key="OnMouseEnter1">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00.5000000" Value="1"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+		<Storyboard x:Key="OnMouseLeave1">
+			<DoubleAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="border" Storyboard.TargetProperty="(UIElement.Opacity)">
+				<SplineDoubleKeyFrame KeyTime="00:00:00" Value="1"/>
+				<SplineDoubleKeyFrame KeyTime="00:00:00.3000000" Value="0"/>
+			</DoubleAnimationUsingKeyFrames>
+		</Storyboard>
+	</Window.Resources>
+
+	<Window.DataContext>
+		<Binding Mode="OneWay" Source="{StaticResource FrmLiveSettingsDS}"/>
+	</Window.DataContext>
+
+	<Window.Triggers>
+		<EventTrigger RoutedEvent="Mouse.MouseEnter" SourceName="border">
+			<BeginStoryboard Storyboard="{StaticResource OnMouseEnter1}"/>
+		</EventTrigger>
+		<EventTrigger RoutedEvent="Mouse.MouseLeave" SourceName="border">
+			<BeginStoryboard x:Name="OnMouseLeave1_BeginStoryboard" Storyboard="{StaticResource OnMouseLeave1}"/>
+		</EventTrigger>
+	</Window.Triggers>
+
+	<Grid Margin="0,0,0,0" x:Name="mainGrid">
+		<Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" x:Name="imgBack" Stretch="Fill"/>
+		<RichTextBox Background="{x:Null}" BorderBrush="{x:Null}" FontSize="{Binding Path=FontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding Path=TextColor, Converter={StaticResource ColorToBrushConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" x:Name="richTextBox" VerticalAlignment="Stretch" IsReadOnly="True"/>
+		<Border Opacity="0" Margin="0,0,0,1" x:Name="border" VerticalAlignment="Bottom" Height="Auto" BorderBrush="#FF424242" BorderThickness="1,2,1,1" CornerRadius="10,10,0,0">
+			<Border.Background>
+				<LinearGradientBrush EndPoint="0.51,-0.422" StartPoint="0.51,0.795">
+					<GradientStop Color="#FF000000" Offset="0.452"/>
+					<GradientStop Color="#FF818181" Offset="0.74"/>
+				</LinearGradientBrush>
+			</Border.Background>
+			<StackPanel Height="Auto" Orientation="Horizontal" d:LayoutOverrides="Height" Margin="0,5,0,5" Width="Auto" HorizontalAlignment="Center">
+				<Button FontSize="18" FontWeight="Bold" Style="{DynamicResource ButtonStyleFont}" Width="30" Height="30" Content="B" x:Name="btnBold" Click="btnTextDecorations_Click" Foreground="#FFFFFFFF" ToolTip="Bold"/>
+				<Button FontSize="18" FontWeight="Bold" Style="{DynamicResource ButtonStyleFont}" Width="30" Height="30" Content="I" FontStyle="Italic" Margin="5,0,0,0" x:Name="btnItalic" Foreground="#FFFFFFFF" Click="btnTextDecorations_Click" ToolTip="Italic"/>
+				<Button FontSize="18" FontWeight="Bold" Foreground="#FFFFFFFF" Margin="5,0,0,0" x:Name="btnUnderline" Style="{DynamicResource ButtonStyleFont}" Width="30" Height="30" Content="U" Click="btnTextDecorations_Click" ToolTip="Underline"/>
+				<Button FontSize="18" FontWeight="Bold" Foreground="#FFFFFFFF" Margin="5,0,0,0" x:Name="btnColor" Style="{DynamicResource ButtonStyleFont}" ToolTip="Change Selected Text Color" Width="30" Height="30" Content="C" Click="btnTextDecorations_Click"/>
+			</StackPanel>
+		</Border>
+	</Grid>
+</Window>
