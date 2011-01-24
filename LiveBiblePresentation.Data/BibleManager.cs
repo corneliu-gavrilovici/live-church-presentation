@@ -7,6 +7,7 @@ using System.Windows;
 using System.Linq;
 using System.IO;
 using System.Windows.Forms;
+using LiveBiblePresentation.Data.Properties;
 
 namespace LiveBiblePresentation.Data
 {
