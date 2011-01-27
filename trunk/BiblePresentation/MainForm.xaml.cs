@@ -406,12 +406,20 @@ namespace LiveBiblePresentation
                     case "btnRight":
                         frmLive.Left++;
                         break;
-                    case "btnZoomMinus":
+                    case "btnZoomWMinus":
                         frmLive.Width -= 50;
+                       // frmLive.Height -= 30;
+                        break;
+                    case "btnZoomWPlus":
+                        frmLive.Width += 50;
+                       // frmLive.Height += 30;
+                        break;
+                    case "btnZoomHMinus":
+                        //frmLive.Width -= 50;
                         frmLive.Height -= 30;
                         break;
-                    case "btnZoomPlus":
-                        frmLive.Width += 50;
+                    case "btnZoomHPlus":
+                        //frmLive.Width += 50;
                         frmLive.Height += 30;
                         break;
                 }
@@ -793,8 +801,10 @@ namespace LiveBiblePresentation
             btnUp.Click   += new RoutedEventHandler(btnPositionSize_Click);
             btnRight.Click += new RoutedEventHandler(btnPositionSize_Click);
             btnDown.Click += new RoutedEventHandler(btnPositionSize_Click);
-            btnZoomMinus.Click += new RoutedEventHandler(btnPositionSize_Click);
-            btnZoomPlus.Click += new RoutedEventHandler(btnPositionSize_Click);
+            btnZoomWMinus.Click += new RoutedEventHandler(btnPositionSize_Click);
+            btnZoomWPlus.Click += new RoutedEventHandler(btnPositionSize_Click);
+            btnZoomHMinus.Click += new RoutedEventHandler(btnPositionSize_Click);
+            btnZoomHPlus.Click += new RoutedEventHandler(btnPositionSize_Click);
 
             switch (frmLiveSettings.TextAlign)
             { 
