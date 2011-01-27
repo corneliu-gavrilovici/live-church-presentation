@@ -522,9 +522,11 @@
 									</TransformGroup>
 								</RepeatButton.RenderTransform>
 							</RepeatButton>
-							<RepeatButton HorizontalAlignment="Left" x:Name="btnZoomPlus" Style="{DynamicResource ButtonStyleMove2}" ToolTip="Zoom In" VerticalAlignment="Top" Width="30" Height="30" Content="+" Cursor="Hand" FontSize="30"/>
-							<RepeatButton HorizontalAlignment="Left" x:Name="btnZoomMinus" Style="{DynamicResource ButtonStyleMove2}" ToolTip="Zoom Out" VerticalAlignment="Top" Width="30" Height="30" Content="-" Grid.Column="2" Cursor="Hand" Margin="2,0,0,0"/>
-						</Grid>
+							<RepeatButton HorizontalAlignment="Left" x:Name="btnZoomWPlus" Style="{DynamicResource ButtonStyleMove2}" ToolTip="Zoom W In" VerticalAlignment="Top" Width="30" Height="30" Content="+w" Cursor="Hand" FontSize="15"/>
+                            <RepeatButton HorizontalAlignment="Left" x:Name="btnZoomWMinus" Style="{DynamicResource ButtonStyleMove2}" ToolTip="Zoom W Out" VerticalAlignment="Top" Width="30" Height="30" Content="-w" Grid.Column="2" Cursor="Hand" Margin="2,0,0,0" FontSize="15"/>
+                            <RepeatButton HorizontalAlignment="Left" x:Name="btnZoomHPlus" Style="{DynamicResource ButtonStyleMove2}" ToolTip="Zoom H In" VerticalAlignment="Top" Width="30" Height="30" Content="+h" Grid.Row="2" Grid.Column="0" Cursor="Hand" FontSize="15"/>
+                            <RepeatButton HorizontalAlignment="Left" x:Name="btnZoomHMinus" Style="{DynamicResource ButtonStyleMove2}" ToolTip="Zoom H Out" VerticalAlignment="Top" Width="30" Height="30" Content="-h" Grid.Row="2" Grid.Column="2" Cursor="Hand" Margin="2,0,0,0" FontSize="15"/>
+                        </Grid>
 					</StackPanel>
 				</Border>
 			</Grid>
