@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 
 namespace LiveBiblePresentation.Data
 {
@@ -22,4 +19,3 @@ namespace LiveBiblePresentation.Data
 		}
     }
 }
-

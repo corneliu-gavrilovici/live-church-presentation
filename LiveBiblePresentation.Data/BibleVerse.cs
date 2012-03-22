@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 
 namespace LiveBiblePresentation.Data
@@ -78,6 +75,12 @@ namespace LiveBiblePresentation.Data
 
         #endregion
 
+        #region INotifyPropertyChanged Members
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
         #region Private Members
 
         private int m_id;
@@ -85,16 +88,6 @@ namespace LiveBiblePresentation.Data
         private int m_capitol = 1;
         private int m_verset = 1;
         private string m_text;
-
-        #endregion
-
-        #region INotifyPropertyChanged Members
-
-        #endregion
-
-        #region INotifyPropertyChanged Members
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
     }
