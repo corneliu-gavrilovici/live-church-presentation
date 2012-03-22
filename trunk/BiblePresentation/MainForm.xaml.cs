@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+
 using LiveBiblePresentation.Data;
 using LiveBiblePresentation.Resources;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
-using System.Windows.Markup;
-using System.IO;
-using System.Xml;
-using System.Windows.Forms;
-using System.Windows.Threading;
-using System.Text;
 
 namespace LiveBiblePresentation
 {
@@ -40,8 +37,8 @@ namespace LiveBiblePresentation
                 bdOptions.Visibility = frmLiveSettings.IsSettingsVisible;
                 richTextBox.Document.TextAlignment = frmLiveSettings.TextAlign;
 
-                Width        = Settings.Default.MainFormSize.Width;
-                Height       = Settings.Default.MainFormSize.Height;
+                Width = Settings.Default.MainFormSize.Width;
+                Height = Settings.Default.MainFormSize.Height;
                 txtText.Document.Blocks.Clear();
                 txtText.Document.Blocks.Add(new Paragraph(new Run(Settings.Default.Text.Trim())));
 
@@ -65,12 +62,12 @@ namespace LiveBiblePresentation
                 splash.Close();
 
                 tabControl.SelectionChanged += new SelectionChangedEventHandler(tabControl_SelectionChanged);
-                radLeft.Checked   += new RoutedEventHandler(radtextAlign_CheckedChanged);
-                radRight.Checked  += new RoutedEventHandler(radtextAlign_CheckedChanged);
+                radLeft.Checked += new RoutedEventHandler(radtextAlign_CheckedChanged);
+                radRight.Checked += new RoutedEventHandler(radtextAlign_CheckedChanged);
                 radCenter.Checked += new RoutedEventHandler(radtextAlign_CheckedChanged);
 
                 cbxChapters.DropDownOpened += new EventHandler(cbxChapters_DropDownOpened);
-                cbxVerses.DropDownOpened   += new EventHandler(cbxVerses_DropDownOpened);
+                cbxVerses.DropDownOpened += new EventHandler(cbxVerses_DropDownOpened);
                 richTextBox.TextChanged += new TextChangedEventHandler(richTextBox_TextChanged);
                 richTextBox.SelectionChanged += new RoutedEventHandler(richTextBox_SelectionChanged);
                 txtText.SelectionChanged += new RoutedEventHandler(richTextBox_SelectionChanged);
@@ -119,10 +116,7 @@ namespace LiveBiblePresentation
 
         private void Current_DispatcherUnhandledException(object sender, System.Windows.Threading.DispatcherUnhandledExceptionEventArgs e)
         {
-            // System.Windows.Clipboard.SetText(e.Exception.ToString());
-            //System.Windows.MessageBox.Show("Sorry! An unhandled exception has occured. Please send an email to   cornel_gav@yahoo.com   with the follwoing content: \n \n" + e.Exception.ToString() +"\n \n This message is already in Clipboard, just paste it!", "Live Presentation");
             System.Windows.MessageBox.Show(e.Exception.Message);
-            //e.Handled = true;
         }
 
         private void cbxVerses_DropDownOpened(object sender, EventArgs e)
@@ -136,8 +130,7 @@ namespace LiveBiblePresentation
             }
 
             cbxVerses.SelectedIndex = lastVerseSelIndex;
-            if (cbxVerses.SelectedItem == null &&
-                cbxVerses.Items.Count > 0)
+            if (cbxVerses.SelectedItem == null && cbxVerses.Items.Count > 0)
                 cbxVerses.SelectedIndex = 0;
         }
 
@@ -156,11 +149,9 @@ namespace LiveBiblePresentation
             cbxChapters.SelectedIndex = lastSelChapterIndex;
             cbxVerses.SelectedIndex = lastVerseSelIndex;
 
-            if (cbxVerses.SelectedItem == null &&
-                cbxVerses.Items.Count > 0)
+            if (cbxVerses.SelectedItem == null && cbxVerses.Items.Count > 0)
                 cbxVerses.SelectedIndex = 0;
-            if (cbxChapters.SelectedItem == null && 
-                cbxChapters.Items.Count > 0)
+            if (cbxChapters.SelectedItem == null && cbxChapters.Items.Count > 0)
                 cbxChapters.SelectedIndex = 0;
         }
 
@@ -284,7 +275,7 @@ namespace LiveBiblePresentation
             {
                 notifyIcon.Dispose();
             }
-            Settings.Default.MainFormSize = new System.Drawing.Size(Convert.ToInt16(Width), 
+            Settings.Default.MainFormSize = new System.Drawing.Size(Convert.ToInt16(Width),
                                                                     Convert.ToInt16(Height));
             frmLiveSettings.IsSettingsVisible = bdOptions.Visibility;
             Settings.Default.Text = new TextRange(txtText.Document.ContentStart, txtText.Document.ContentEnd).Text;
@@ -408,11 +399,11 @@ namespace LiveBiblePresentation
                         break;
                     case "btnZoomWMinus":
                         frmLive.Width -= 50;
-                       // frmLive.Height -= 30;
+                        // frmLive.Height -= 30;
                         break;
                     case "btnZoomWPlus":
                         frmLive.Width += 50;
-                       // frmLive.Height += 30;
+                        // frmLive.Height += 30;
                         break;
                     case "btnZoomHMinus":
                         //frmLive.Width -= 50;
@@ -489,7 +480,7 @@ namespace LiveBiblePresentation
         {
             if (frmLive != null)
             {
-                TextRange    mainRange = null;
+                TextRange mainRange = null;
                 if (tabControl.SelectedItem == tabItemBible)
                 {
                     if (richTextBox.Document.Blocks.LastBlock == null)
@@ -557,8 +548,7 @@ namespace LiveBiblePresentation
 
         private void GetPrevious()
         {
-            if (VerseID == 1)
-                return;
+            if (VerseID == 1) return;
 
             txtSearch.Clear();
             VerseID = VerseID - NoOfVerses;
@@ -570,8 +560,8 @@ namespace LiveBiblePresentation
 
         private void GetNext()
         {
-            if (VerseID == 31102)
-                return;
+            if (VerseID == 31102) return;
+
             txtSearch.Clear();
             VerseID = VerseID + NoOfVerses;
             BibleVerses bibleVerses = m_manager.GetVerses(VerseID, NoOfVerses + 1);
@@ -600,14 +590,14 @@ namespace LiveBiblePresentation
                 frmLive.DataContext = frmLiveSettings;
 
                 if (!String.IsNullOrEmpty(frmLiveSettings.BackgroundImagePath))
-                      {
-                        frmLive.imgBack.Source = new BitmapImage(new Uri(frmLiveSettings.BackgroundImagePath,
-                                                                     UriKind.Absolute));
-                      }
+                {
+                    frmLive.imgBack.Source = new BitmapImage(new Uri(frmLiveSettings.BackgroundImagePath,
+                                                                 UriKind.Absolute));
+                }
 
                 if (tabItemBible.IsSelected)
                 {
-                    frmLive.m_spaceKeyPressed     += GetNext;
+                    frmLive.m_spaceKeyPressed += GetNext;
                     frmLive.m_backSpaceKeyPressed += GetPrevious;
                     BibleVerses bibleVerses = m_manager.GetVerses(VerseID, NoOfVerses);
                     CopyContentLive();
@@ -626,7 +616,7 @@ namespace LiveBiblePresentation
 
                 if (frmLiveSettings.DisplayNo == 1)
                 {
-                    frmLive.Topmost     = true;
+                    frmLive.Topmost = true;
                     frmLive.WindowState = WindowState.Maximized;
                 }
                 else
@@ -637,20 +627,20 @@ namespace LiveBiblePresentation
                         if (screen.Bounds.Contains((int)Settings.Default.FrmLiveLeft,
                                                    (int)Settings.Default.FrmLiveTop))
                         {
-                            frmLive.Width  = Settings.Default.FrmLiveWidth;
+                            frmLive.Width = Settings.Default.FrmLiveWidth;
                             frmLive.Height = Settings.Default.FrmLiveHeight;
-                            frmLive.Top    = Settings.Default.FrmLiveTop;
-                            frmLive.Left   = Settings.Default.FrmLiveLeft;
+                            frmLive.Top = Settings.Default.FrmLiveTop;
+                            frmLive.Left = Settings.Default.FrmLiveLeft;
                         }
                         else
                         {
-                            frmLive.Top  = Convert.ToDouble(screen.Bounds.Top);
+                            frmLive.Top = Convert.ToDouble(screen.Bounds.Top);
                             frmLive.Left = Convert.ToDouble(screen.Bounds.Left);
                         }
                     }
                     catch (NullReferenceException)
                     {
-                        frmLive.Top  = Convert.ToDouble(screen.Bounds.Top);
+                        frmLive.Top = Convert.ToDouble(screen.Bounds.Top);
                         frmLive.Left = Convert.ToDouble(screen.Bounds.Left);
                     }
                 }
@@ -671,12 +661,12 @@ namespace LiveBiblePresentation
 
         private void Populating(BibleVerses bibleVerse)
         {
-            cbxVerses.SelectionChanged   -= cbx_SelectionChanged;
-            cbxBooks.SelectionChanged    -= cbx_SelectionChanged;
+            cbxVerses.SelectionChanged -= cbx_SelectionChanged;
+            cbxBooks.SelectionChanged -= cbx_SelectionChanged;
             cbxChapters.SelectionChanged -= cbx_SelectionChanged;
-            cbxBooks.Text    = bibleVerse[bibleVerse.Count - NoOfVerses - 1].Carte;
+            cbxBooks.Text = bibleVerse[bibleVerse.Count - NoOfVerses - 1].Carte;
             cbxChapters.Text = bibleVerse[bibleVerse.Count - NoOfVerses - 1].Capitol.ToString();
-            cbxVerses.Text   = bibleVerse[bibleVerse.Count - NoOfVerses - 1].Verset.ToString();
+            cbxVerses.Text = bibleVerse[bibleVerse.Count - NoOfVerses - 1].Verset.ToString();
             cbxVerses.SelectionChanged += cbx_SelectionChanged;
             cbxBooks.SelectionChanged += cbx_SelectionChanged;
             cbxChapters.SelectionChanged += cbx_SelectionChanged;
@@ -685,7 +675,7 @@ namespace LiveBiblePresentation
         public void PopulateWithVerses(BibleVerses verses)
         {
             richTextBox.Document.Blocks.Clear();
-          
+
             List<string> books = new List<string>();
             foreach (BibleVerse verse in verses)
             {
@@ -722,7 +712,7 @@ namespace LiveBiblePresentation
 
                 if (!String.IsNullOrEmpty(txtSearch.Text) && !goToVerseInProcess)
                 {
-                    Run leftRun   = new Run(" " + verse.Text.Substring(0, verse.Text.ToLower().IndexOf(txtSearch.Text.ToLower())));
+                    Run leftRun = new Run(" " + verse.Text.Substring(0, verse.Text.ToLower().IndexOf(txtSearch.Text.ToLower())));
                     Run foundText = new Run(verse.Text.Substring(verse.Text.ToLower().IndexOf(txtSearch.Text.ToLower()), txtSearch.Text.Length));
                     foundText.Foreground = Brushes.SaddleBrown;
                     foundText.FontWeight = FontWeights.UltraBlack;
@@ -758,7 +748,7 @@ namespace LiveBiblePresentation
             VerseID = Convert.ToInt16(((Run)sender).Tag);
             BibleVerses verses = m_manager.GetVerses(Convert.ToInt16(((Run)sender).Tag), NoOfVerses + 1);
             PopulateWithVerses(verses);
-         
+
             txtSearch.Clear();
             goToVerseInProcess = false;
         }
@@ -767,7 +757,7 @@ namespace LiveBiblePresentation
         {
             cbxBibleTextLanguage.ItemsSource = Enum.GetValues(typeof(BibleLanguage));
             cbxBibleTextLanguage.SelectedValue = Settings.Default.BibleLanguage;
-            cbxBibleTextLanguage.SelectionChanged += new SelectionChangedEventHandler(cbxBibleTextLanguage_SelectionChanged);
+            cbxBibleTextLanguage.SelectionChanged += cbxBibleTextLanguage_SelectionChanged;
 
             //Populate FontSize Combo.
             for (int i = 25; i <= 70; i++)
@@ -775,39 +765,39 @@ namespace LiveBiblePresentation
                 cbxFontSize.Items.Add(i.ToString());
             }
 
-            //Populate NoOfSscreens Combo.
+            // Populate NoOfSscreens Combo.
             for (int i = 1; i <= Screen.AllScreens.Length; i++)
             {
                 cbxDisplays.Items.Add(i.ToString());
             }
 
-            //Populate NoOfVerses Combo.
+            // Populate NoOfVerses Combo.
             for (int i = 1; i <= 6; i++)
             {
                 cbxNoOfVerses.Items.Add(i.ToString());
             }
 
             cbxDisplays.Text = frmLiveSettings.DisplayNo.ToString();
-            cbxFontSize.Text   = frmLiveSettings.FontSize.ToString();
+            cbxFontSize.Text = frmLiveSettings.FontSize.ToString();
             cbxNoOfVerses.Text = frmLiveSettings.NoOfVerses.ToString();
 
-            cbxNoOfVerses.SelectionChanged += new SelectionChangedEventHandler(cbxNoOfVerses_SelectionChanged);
-            cbxDisplays.SelectionChanged += new SelectionChangedEventHandler(cbxDisplays_SelectionChanged);
-            cbxFontSize.SelectionChanged += new SelectionChangedEventHandler(cbxFontSize_SelectionChanged);
-            btnTextColor.Click += new RoutedEventHandler(btnTextColor_Click);
-            btnImage.Click += new RoutedEventHandler(btnImage_Click);
+            cbxNoOfVerses.SelectionChanged += cbxNoOfVerses_SelectionChanged;
+            cbxDisplays.SelectionChanged += cbxDisplays_SelectionChanged;
+            cbxFontSize.SelectionChanged += cbxFontSize_SelectionChanged;
+            btnTextColor.Click += btnTextColor_Click;
+            btnImage.Click += btnImage_Click;
 
-            btnLeft.Click += new RoutedEventHandler(btnPositionSize_Click);
-            btnUp.Click   += new RoutedEventHandler(btnPositionSize_Click);
-            btnRight.Click += new RoutedEventHandler(btnPositionSize_Click);
-            btnDown.Click += new RoutedEventHandler(btnPositionSize_Click);
-            btnZoomWMinus.Click += new RoutedEventHandler(btnPositionSize_Click);
-            btnZoomWPlus.Click += new RoutedEventHandler(btnPositionSize_Click);
-            btnZoomHMinus.Click += new RoutedEventHandler(btnPositionSize_Click);
-            btnZoomHPlus.Click += new RoutedEventHandler(btnPositionSize_Click);
+            btnLeft.Click += btnPositionSize_Click;
+            btnUp.Click += btnPositionSize_Click;
+            btnRight.Click += btnPositionSize_Click;
+            btnDown.Click += btnPositionSize_Click;
+            btnZoomWMinus.Click += btnPositionSize_Click;
+            btnZoomWPlus.Click += btnPositionSize_Click;
+            btnZoomHMinus.Click += btnPositionSize_Click;
+            btnZoomHPlus.Click += btnPositionSize_Click;
 
             switch (frmLiveSettings.TextAlign)
-            { 
+            {
                 case TextAlignment.Center:
                     radCenter.IsChecked = true;
                     break;
@@ -829,9 +819,9 @@ namespace LiveBiblePresentation
 
             List<string> biblleBooks = m_manager.GetBibleBooks();
 
-            int prevSelBooKIndex    = cbxBooks.SelectedIndex;
+            int prevSelBooKIndex = cbxBooks.SelectedIndex;
             int prevSelChapterIndex = cbxChapters.SelectedIndex;
-            int prevSelVerseIndex   = cbxVerses.SelectedIndex;
+            int prevSelVerseIndex = cbxVerses.SelectedIndex;
 
             cbxBooks.Items.Clear();
             foreach (string book in biblleBooks)
@@ -871,7 +861,6 @@ namespace LiveBiblePresentation
             if (frmLive != null)
             {
                 frmLive.richTextBox.Document.TextAlignment = richTextBox.Document.TextAlignment;
-
             }
         }
 
@@ -899,13 +888,13 @@ namespace LiveBiblePresentation
 
         #region Private Members
 
-        private BibleManager    m_manager = null;
-        private FrmLive         frmLive = null;
+        private BibleManager m_manager = null;
+        private FrmLive frmLive = null;
         private System.Windows.Forms.NotifyIcon notifyIcon = null;
-        private Storyboard      m_storyBoard = null;
+        private Storyboard m_storyBoard = null;
         private FrmLiveSettings frmLiveSettings = null;
-        private FrmSplash       splash = null;
-        private bool            goToVerseInProcess = false;
+        private FrmSplash splash = null;
+        private bool goToVerseInProcess = false;
 
         #endregion
     }

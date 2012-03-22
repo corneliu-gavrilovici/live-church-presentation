@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Data.OleDb;
 using System.Data;
-using System.Windows;
-using System.Linq;
+using System.Data.OleDb;
 using System.IO;
-using System.Windows.Forms;
+using System.Linq;
+using System.Reflection;
+
 using LiveBiblePresentation.Data.Properties;
 
 namespace LiveBiblePresentation.Data
@@ -24,7 +23,7 @@ namespace LiveBiblePresentation.Data
 
         public BibleManager(BibleLanguage bibleLanguage)
         {
-            m_bible = GetBible(bibleLanguage);
+            bible = GetBible(bibleLanguage);
         }
 
         #endregion
@@ -33,10 +32,7 @@ namespace LiveBiblePresentation.Data
 
         public BibleVerses Bible
         {
-            get
-            {
-                return m_bible;
-            }
+            get { return bible; }
         }
 
         #endregion
@@ -118,9 +114,11 @@ namespace LiveBiblePresentation.Data
                         table = "bibliaEnStd";
                         break;
                 }
+
                 OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT id, carte, capitol, verset, text FROM " + table + " ORDER BY id", conn);
                 DataSet dataSet = new DataSet();
                 adapter.Fill(dataSet);
+
                 foreach (DataRow row in dataSet.Tables[0].Rows)
                 {
                     BibleVerse bibleVerse = new BibleVerse();
@@ -132,10 +130,6 @@ namespace LiveBiblePresentation.Data
                     bibleVerses.Add(bibleVerse);
                 }
             }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
             finally
             {
                 if (conn != null)
@@ -143,8 +137,8 @@ namespace LiveBiblePresentation.Data
                     conn.Close();
                     conn.Dispose();
                 }
-
             }
+
             return bibleVerses;
         }
 
@@ -156,8 +150,13 @@ namespace LiveBiblePresentation.Data
         {
             get
             {
-                string dbPath = Application.StartupPath + Path.DirectorySeparatorChar + Resources.DbName;
-                string connectionString = Resources.ConnectionProvider + dbPath + Resources.UserCredentials;
+                if (string.IsNullOrEmpty(connectionString))
+                {
+                    string dbPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Resources.DbName);
+
+                    connectionString =  Resources.ConnectionProvider + dbPath + Resources.UserCredentials;
+                }
+
                 return connectionString;
             }
         }
@@ -166,9 +165,9 @@ namespace LiveBiblePresentation.Data
 
         #region Private Members
 
-        private BibleVerses m_bible = null;
+        private readonly BibleVerses bible = null;
+        private string connectionString = string.Empty;
 
         #endregion
     }
 }
-

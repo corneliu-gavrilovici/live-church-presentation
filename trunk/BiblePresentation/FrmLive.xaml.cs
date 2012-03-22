@@ -1,13 +1,9 @@
-﻿using System;
-using System.IO;
-using System.Net;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Navigation;
 using System.Windows.Documents;
+using System.Windows.Media;
+
 using LiveBiblePresentation.Resources;
 
 namespace LiveBiblePresentation
@@ -15,33 +11,29 @@ namespace LiveBiblePresentation
     public delegate void SpaceKeyPressed();
     public delegate void BackSpaceKeyPressed();
 
-	public partial class FrmLive
+    public partial class FrmLive
     {
         #region Public Methods
 
         public FrmLive()
-		{
-			this.InitializeComponent();
-            PreviewKeyDown += new System.Windows.Input.KeyEventHandler(FrmLive_PreviewKeyDown);
-            Closing += new System.ComponentModel.CancelEventHandler(FrmLive_Closing);
+        {
+            this.InitializeComponent();
+            PreviewKeyDown += FrmLive_PreviewKeyDown;
+            Closing += FrmLive_Closing;
         }
-
-        #endregion
-
-        #region Public Properties
 
         #endregion
 
         #region Private Event Handlers
 
-        private void FrmLive_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void FrmLive_Closing(object sender, CancelEventArgs e)
         {
             if ((DataContext as FrmLiveSettings).DisplayNo > 1)
             {
-                Settings.Default.FrmLiveWidth  = Width;
+                Settings.Default.FrmLiveWidth = Width;
                 Settings.Default.FrmLiveHeight = Height;
-                Settings.Default.FrmLiveTop    = Top;
-                Settings.Default.FrmLiveLeft   = Left;
+                Settings.Default.FrmLiveTop = Top;
+                Settings.Default.FrmLiveLeft = Left;
                 Settings.Default.Save();
             }
         }
@@ -51,17 +43,14 @@ namespace LiveBiblePresentation
             if (e.Key == System.Windows.Input.Key.Escape)
                 Close();
 
-            if ((e.Key == System.Windows.Input.Key.Space)
-                || (e.Key == System.Windows.Input.Key.Right)
-                || (e.Key == System.Windows.Input.Key.Enter))
+            if (e.Key == System.Windows.Input.Key.Space || e.Key == System.Windows.Input.Key.Right || e.Key == System.Windows.Input.Key.Enter)
             {
                 if (m_spaceKeyPressed != null)
                 {
                     m_spaceKeyPressed();
                 }
             }
-            if ((e.Key == System.Windows.Input.Key.Back)
-               || (e.Key == System.Windows.Input.Key.Left))
+            if (e.Key == System.Windows.Input.Key.Back || e.Key == System.Windows.Input.Key.Left)
             {
                 if (m_backSpaceKeyPressed != null)
                     m_backSpaceKeyPressed();
@@ -71,6 +60,7 @@ namespace LiveBiblePresentation
         private void btnTextDecorations_Click(object sender, RoutedEventArgs e)
         {
             string buttonName = ((Button)sender).Name;
+
             switch (buttonName)
             {
                 case "btnBold":
@@ -81,8 +71,8 @@ namespace LiveBiblePresentation
                     else
                     {
                         richTextBox.Selection.ApplyPropertyValue(RichTextBox.FontWeightProperty, FontWeights.UltraBold);
-                    } 
-                   
+                    }
+
                     break;
                 case "btnItalic":
                     if (richTextBox.Selection.GetPropertyValue(FontStyleProperty).ToString() == "Oblique")
@@ -92,8 +82,8 @@ namespace LiveBiblePresentation
                     else
                     {
                         richTextBox.Selection.ApplyPropertyValue(RichTextBox.FontStyleProperty, FontStyles.Oblique);
-                    } 
-                   
+                    }
+
                     break;
                 case "btnUnderline":
                     if (richTextBox.Selection.GetPropertyValue(Inline.TextDecorationsProperty) == TextDecorations.Underline)
@@ -124,7 +114,7 @@ namespace LiveBiblePresentation
 
         #region Private Members
 
-        public SpaceKeyPressed     m_spaceKeyPressed = null;
+        public SpaceKeyPressed m_spaceKeyPressed = null;
         public BackSpaceKeyPressed m_backSpaceKeyPressed = null;
 
         #endregion
