@@ -57,20 +57,20 @@ namespace LiveBiblePresentation
 
                 PopulateSettingsControls();
                 EventManager.RegisterClassHandler(typeof(System.Windows.Controls.Button), System.Windows.Controls.Button.ClickEvent, new RoutedEventHandler(Button_Click));
-                System.Windows.Application.Current.DispatcherUnhandledException += new System.Windows.Threading.DispatcherUnhandledExceptionEventHandler(Current_DispatcherUnhandledException);
+                System.Windows.Application.Current.DispatcherUnhandledException += Current_DispatcherUnhandledException;
 
                 splash.Close();
 
-                tabControl.SelectionChanged += new SelectionChangedEventHandler(tabControl_SelectionChanged);
-                radLeft.Checked += new RoutedEventHandler(radtextAlign_CheckedChanged);
-                radRight.Checked += new RoutedEventHandler(radtextAlign_CheckedChanged);
-                radCenter.Checked += new RoutedEventHandler(radtextAlign_CheckedChanged);
+                tabControl.SelectionChanged += tabControl_SelectionChanged;
+                radLeft.Checked += radtextAlign_CheckedChanged;
+                radRight.Checked += radtextAlign_CheckedChanged;
+                radCenter.Checked += radtextAlign_CheckedChanged;
 
-                cbxChapters.DropDownOpened += new EventHandler(cbxChapters_DropDownOpened);
-                cbxVerses.DropDownOpened += new EventHandler(cbxVerses_DropDownOpened);
-                richTextBox.TextChanged += new TextChangedEventHandler(richTextBox_TextChanged);
-                richTextBox.SelectionChanged += new RoutedEventHandler(richTextBox_SelectionChanged);
-                txtText.SelectionChanged += new RoutedEventHandler(richTextBox_SelectionChanged);
+                cbxChapters.DropDownOpened += cbxChapters_DropDownOpened;
+                cbxVerses.DropDownOpened += cbxVerses_DropDownOpened;
+                richTextBox.TextChanged += richTextBox_TextChanged;
+                richTextBox.SelectionChanged += richTextBox_SelectionChanged;
+                txtText.SelectionChanged += richTextBox_SelectionChanged;
                 foreach (FontFamily fontFamily in Fonts.SystemFontFamilies)
                 {
                     FontsComboBox.Items.Add(fontFamily.Source);
@@ -448,7 +448,7 @@ namespace LiveBiblePresentation
         /// Gets or sets the verse ID.
         /// </summary>
         /// <value>The verse ID.</value>
-        public int VerseID
+        private int VerseID
         {
             get
             {
@@ -464,7 +464,7 @@ namespace LiveBiblePresentation
         /// Gets the no of verses.
         /// </summary>
         /// <value>The no of verses.</value>
-        public int NoOfVerses
+        private int NoOfVerses
         {
             get
             {
@@ -536,14 +536,14 @@ namespace LiveBiblePresentation
             System.Windows.Forms.ContextMenuStrip menu = new System.Windows.Forms.ContextMenuStrip();
             System.Windows.Forms.ToolStripMenuItem exitItem = new ToolStripMenuItem("Exit");
             exitItem.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            exitItem.Click += new EventHandler(exitItem_Click);
+            exitItem.Click += exitItem_Click;
             menu.Items.Add(exitItem);
 
             notifyIcon.ContextMenuStrip = menu;
             notifyIcon.Visible = true;
             notifyIcon.Text = "Live Bible Presentation";
             notifyIcon.Icon = Resource.greenbook;
-            notifyIcon.DoubleClick += new EventHandler(m_notifyIcon_DoubleClick);
+            notifyIcon.DoubleClick += m_notifyIcon_DoubleClick;
         }
 
         private void GetPrevious()
@@ -570,7 +570,7 @@ namespace LiveBiblePresentation
             Populating(bibleVerses);
         }
 
-        public void DisplayLiveForm(int displayNo)
+        private void DisplayLiveForm(int displayNo)
         {
             Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
             //Close the form if already open.
@@ -586,13 +586,12 @@ namespace LiveBiblePresentation
             try
             {
                 frmLive = new FrmLive();
-                frmLive.Closed += new EventHandler(frmLive_Closed);
+                frmLive.Closed += frmLive_Closed;
                 frmLive.DataContext = frmLiveSettings;
 
                 if (!String.IsNullOrEmpty(frmLiveSettings.BackgroundImagePath))
                 {
-                    frmLive.imgBack.Source = new BitmapImage(new Uri(frmLiveSettings.BackgroundImagePath,
-                                                                 UriKind.Absolute));
+                    frmLive.imgBack.Source = new BitmapImage(new Uri(frmLiveSettings.BackgroundImagePath, UriKind.Absolute));
                 }
 
                 if (tabItemBible.IsSelected)
@@ -624,8 +623,7 @@ namespace LiveBiblePresentation
                     Screen screen = (Screen)Screen.AllScreens.GetValue(displayNo);
                     try
                     {
-                        if (screen.Bounds.Contains((int)Settings.Default.FrmLiveLeft,
-                                                   (int)Settings.Default.FrmLiveTop))
+                        if (screen.Bounds.Contains((int)Settings.Default.FrmLiveLeft, (int)Settings.Default.FrmLiveTop))
                         {
                             frmLive.Width = Settings.Default.FrmLiveWidth;
                             frmLive.Height = Settings.Default.FrmLiveHeight;
@@ -672,7 +670,7 @@ namespace LiveBiblePresentation
             cbxChapters.SelectionChanged += cbx_SelectionChanged;
         }
 
-        public void PopulateWithVerses(BibleVerses verses)
+        private void PopulateWithVerses(BibleVerses verses)
         {
             richTextBox.Document.Blocks.Clear();
 
@@ -701,9 +699,9 @@ namespace LiveBiblePresentation
                 Run chapterVerseName = new Run(verse.Capitol.ToString() + ":" + verse.Verset.ToString());
 
 
-                chapterVerseName.MouseLeave += new System.Windows.Input.MouseEventHandler(chapterVerseName_MouseLeave);
-                chapterVerseName.MouseDown += new MouseButtonEventHandler(chapterVerseName_MouseDown);
-                chapterVerseName.MouseEnter += new System.Windows.Input.MouseEventHandler(chapterVerseName_MouseEnter);
+                chapterVerseName.MouseLeave += chapterVerseName_MouseLeave;
+                chapterVerseName.MouseDown += chapterVerseName_MouseDown;
+                chapterVerseName.MouseEnter += chapterVerseName_MouseEnter;
                 chapterVerseName.Cursor = System.Windows.Input.Cursors.Hand;
                 chapterVerseName.Tag = verse.ID;
 
@@ -766,7 +764,7 @@ namespace LiveBiblePresentation
             }
 
             // Populate NoOfSscreens Combo.
-            for (int i = 1; i <= Screen.AllScreens.Length; i++)
+            for (int i = 1; i <= SystemInformation.MonitorCount; i++)
             {
                 cbxDisplays.Items.Add(i.ToString());
             }

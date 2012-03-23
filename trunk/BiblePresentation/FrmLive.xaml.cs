@@ -18,6 +18,7 @@ namespace LiveBiblePresentation
         public FrmLive()
         {
             this.InitializeComponent();
+
             PreviewKeyDown += FrmLive_PreviewKeyDown;
             Closing += FrmLive_Closing;
         }
@@ -46,10 +47,9 @@ namespace LiveBiblePresentation
             if (e.Key == System.Windows.Input.Key.Space || e.Key == System.Windows.Input.Key.Right || e.Key == System.Windows.Input.Key.Enter)
             {
                 if (m_spaceKeyPressed != null)
-                {
                     m_spaceKeyPressed();
-                }
             }
+
             if (e.Key == System.Windows.Input.Key.Back || e.Key == System.Windows.Input.Key.Left)
             {
                 if (m_backSpaceKeyPressed != null)
@@ -107,6 +107,7 @@ namespace LiveBiblePresentation
                     }
                     break;
             }
+
             richTextBox.Focus();
         }
 
