@@ -5,17 +5,14 @@ namespace LiveBiblePresentation.Data
 {
     public class BibleVerses : ObservableCollection<BibleVerse>
     {
-        public BibleVerses()
-            : this(new List<BibleVerse>())
+        public BibleVerses(List<BibleVerse> list)
+            : base(list)
         {
         }
 
-        public BibleVerses(List<BibleVerse> list) 
-		{
-            list.ForEach(delegate(BibleVerse verse)
-			{
-                this.Add(verse);
-			});
-		}
+        public BibleVerses(IEnumerable<BibleVerse> collection)
+            : base(collection)
+        {
+        }
     }
 }

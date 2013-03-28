@@ -1,3 +1,4 @@
+using LiveBiblePresentation.Data.Properties;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -5,8 +6,6 @@ using System.Data.OleDb;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-
-using LiveBiblePresentation.Data.Properties;
 
 namespace LiveBiblePresentation.Data
 {
@@ -75,16 +74,17 @@ namespace LiveBiblePresentation.Data
         public BibleVerses GetVerses(int id, int noOfVerses)
         {
             int maxId = id + noOfVerses;
-            return new BibleVerses((from b in Bible
-                    where b.ID >= id && b.ID < maxId && Bible.Count != noOfVerses
-                    select b).ToList());
+
+            return new BibleVerses(from b in Bible
+                                   where b.ID >= id && b.ID < maxId && Bible.Count != noOfVerses
+                                   select b);
         }
 
         public BibleVerses Search(string textToSearch)
         {
-            return new BibleVerses((from b in Bible
-                                    where b.Text.ToLower().Contains(textToSearch.ToLower().Trim())
-                                    select b).ToList());
+            return new BibleVerses(from b in Bible
+                                   where b.Text.ToLower().Contains(textToSearch.ToLower().Trim())
+                                   select b);
         }
 
         #endregion
@@ -93,11 +93,10 @@ namespace LiveBiblePresentation.Data
 
         private BibleVerses GetBible(BibleLanguage bibleLanguage)
         {
-            BibleVerses bibleVerses = new BibleVerses();
+            BibleVerses bibleVerses = new BibleVerses(new List<BibleVerse>());
             OleDbConnection conn = null;
             try
             {
-
                 conn = new OleDbConnection(ConnectionString);
 
                 string table = string.Empty;

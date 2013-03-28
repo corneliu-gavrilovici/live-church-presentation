@@ -1,10 +1,10 @@
-﻿using System.ComponentModel;
+﻿using LiveBiblePresentation.Resources;
+
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-
-using LiveBiblePresentation.Resources;
 
 namespace LiveBiblePresentation
 {

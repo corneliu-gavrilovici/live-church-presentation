@@ -1,8 +1,7 @@
+using LiveBiblePresentation.Resources;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows;
-
-using LiveBiblePresentation.Resources;
 
 namespace LiveBiblePresentation
 {

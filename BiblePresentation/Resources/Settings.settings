@@ -26,9 +26,6 @@
     <Setting Name="FrmLiveHeight" Type="System.Double" Scope="User">
       <Value Profile="(Default)">600</Value>
     </Setting>
-    <Setting Name="GoLive" Type="System.String" Scope="User">
-      <Value Profile="(Default)">Please GO LIVE! first!</Value>
-    </Setting>
     <Setting Name="BackgroundImagePath" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
