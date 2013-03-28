@@ -4,16 +4,14 @@
 	x:Class="LiveBiblePresentation.FrmSplash"
 	x:Name="Window"
 	Title="FrmSplash"
-	Width="349" Height="35" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" ShowInTaskbar="False" SizeToContent="Manual" WindowStartupLocation="CenterScreen" WindowStyle="None">
+	Width="300" Height="50" Background="{x:Null}" Foreground="{x:Null}" AllowsTransparency="True" ShowInTaskbar="False" SizeToContent="Manual" WindowStartupLocation="CenterScreen" WindowStyle="None">
 
-	<Border x:Name="border" BorderBrush="#FF0A1B07" BorderThickness="1,1,1,1" CornerRadius="4,4,4,4" OpacityMask="#FF00FFFF">
+	<Border x:Name="border" OpacityMask="#FF00FFFF">
 		<Border.Background>
 			<LinearGradientBrush EndPoint="1,0.5" StartPoint="0,0.5">
 				<GradientStop Color="#FF0B5300" Offset="0"/>
-				<GradientStop Color="#FF115B05" Offset="0.991"/>
-				<GradientStop Color="#FF071505" Offset="0.494"/>
 			</LinearGradientBrush>
 		</Border.Background>
-		<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="#FFFFFFFF" Text="Loading Bible..." TextWrapping="Wrap"/>
+		<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" Foreground="#FFFFFFFF" Text="Loading..." TextWrapping="Wrap"/>
 	</Border>
 </Window>

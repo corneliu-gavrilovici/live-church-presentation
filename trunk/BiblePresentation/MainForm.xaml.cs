@@ -1,4 +1,7 @@
-﻿using System;
+﻿using LiveBiblePresentation.Data;
+using LiveBiblePresentation.Resources;
+
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Windows;
@@ -10,9 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-
-using LiveBiblePresentation.Data;
-using LiveBiblePresentation.Resources;
 
 namespace LiveBiblePresentation
 {
@@ -29,6 +29,7 @@ namespace LiveBiblePresentation
             splash = new FrmSplash();
             splash.Show();
             this.InitializeComponent();
+            this.Title = Properties.Resource.ApplicationName;
 
             try
             {
@@ -417,7 +418,7 @@ namespace LiveBiblePresentation
             }
             else
             {
-                System.Windows.MessageBox.Show(Settings.Default.GoLive, this.Title, System.Windows.MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show(Properties.Resource.GoLiveWarning, Title, System.Windows.MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -541,8 +542,8 @@ namespace LiveBiblePresentation
 
             notifyIcon.ContextMenuStrip = menu;
             notifyIcon.Visible = true;
-            notifyIcon.Text = "Live Bible Presentation";
-            notifyIcon.Icon = Resource.greenbook;
+            notifyIcon.Text = Properties.Resource.ApplicationName;
+            notifyIcon.Icon = Properties.Resource.greenbook;
             notifyIcon.DoubleClick += m_notifyIcon_DoubleClick;
         }
 
