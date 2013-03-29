@@ -253,9 +253,12 @@
 						<OuterGlowBitmapEffect GlowColor="#FF292929"/>
 					</Label.BitmapEffect>
 				</Label>
-				<Button HorizontalAlignment="Right" VerticalAlignment="Top" Content="X" x:Name="btnClose" Background="{x:Null}" BorderBrush="{x:Null}" Height="20" Width="20" Margin="0,-5,2,0" Click="btnClose_Click" Cursor="Hand" Foreground="#FFFFFFFF" ToolTip="Close" FontWeight="Bold"/>
-				<TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="?" TextWrapping="Wrap" x:Name="txtHelp" Foreground="#FFFFFFFF" Margin="0,-2,25,0" Width="20" Height="Auto" FontWeight="Bold" ToolTip="cornel_gav@yahoo.com" TextAlignment="Right"/>
-			</Grid>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,-22,4,0">
+                    <TextBlock Text="?" TextWrapping="Wrap" x:Name="txtHelp" Margin="0,3,0,0" Foreground="#FFFFFFFF" Width="20" Height="20" FontWeight="Bold" ToolTip="cornel_gav@yahoo.com" TextAlignment="Center"/>
+                    <Button Content="Donate" x:Name="btnDonate" Background="{x:Null}" Margin="0,0,9,0" BorderBrush="{x:Null}" Height="20" Width="50" Click="btnDonate_Click" Cursor="Hand" Foreground="#FFFFFFFF" ToolTip="Donate" FontWeight="Bold"/>
+                    <Button Content="X" x:Name="btnClose" Background="{x:Null}" BorderBrush="{x:Null}" Height="20" Width="20" Click="btnClose_Click" Cursor="Hand" Foreground="#FFFFFFFF" ToolTip="Close" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
 			<TabControl IsSynchronizedWithCurrentItem="True" Background="{x:Null}" BorderBrush="{x:Null}" Margin="20,-55,0,5" x:Name="tabControl" Style="{DynamicResource TabControlStyle1}" HorizontalAlignment="Stretch" Grid.Row="1">
 				<TabItem x:Name="tabItemBible" Header="Bible" Style="{DynamicResource TabItemStyle1}" Width="115" Height="25" Margin="-2,-2,0,-2">
 					<Grid x:Name="gridBible">
