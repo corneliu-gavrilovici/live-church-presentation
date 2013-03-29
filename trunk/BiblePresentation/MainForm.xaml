@@ -218,7 +218,7 @@
 			<BeginStoryboard x:Name="OnMouseUp2_BeginStoryboard" Storyboard="{StaticResource OnMouseUp2}"/>
 		</EventTrigger>
 	</Window.Triggers>
-	<Border BorderBrush="#B22F4D12" BorderThickness="1,1,1,1" CornerRadius="6,6,6,6" Background="{DynamicResource BrushBackground}">
+	<Border Background="{DynamicResource BrushBackground}">
 		<Grid>
 			<Grid.RowDefinitions>
 				<RowDefinition Height="73"/>
@@ -257,7 +257,7 @@
 				<TextBlock HorizontalAlignment="Right" VerticalAlignment="Top" Text="?" TextWrapping="Wrap" x:Name="txtHelp" Foreground="#FFFFFFFF" Margin="0,-2,25,0" Width="20" Height="Auto" FontWeight="Bold" ToolTip="cornel_gav@yahoo.com" TextAlignment="Right"/>
 			</Grid>
 			<TabControl IsSynchronizedWithCurrentItem="True" Background="{x:Null}" BorderBrush="{x:Null}" Margin="20,-55,0,5" x:Name="tabControl" Style="{DynamicResource TabControlStyle1}" HorizontalAlignment="Stretch" Grid.Row="1">
-				<TabItem x:Name="tabItemBible" Header="Bible" Style="{DynamicResource TabItemStyle1}" Width="115" Height="20" Margin="-2,-2,0,-2">
+				<TabItem x:Name="tabItemBible" Header="Bible" Style="{DynamicResource TabItemStyle1}" Width="115" Height="25" Margin="-2,-2,0,-2">
 					<Grid x:Name="gridBible">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>
@@ -349,7 +349,7 @@
 						</ToolBar>
 					</Grid>
 				</TabItem>
-				<TabItem x:Name="tabItemText" Header="Text" Style="{DynamicResource TabItemStyle1}" Width="115" Height="20">
+				<TabItem x:Name="tabItemText" Header="Text" Style="{DynamicResource TabItemStyle1}" Width="115" Height="25">
 					<Grid x:Name="gridText">
 						<Grid.RowDefinitions>
 							<RowDefinition Height="Auto"/>

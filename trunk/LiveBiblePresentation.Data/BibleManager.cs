@@ -5,7 +5,7 @@ using System.Data;
 using System.Data.OleDb;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Xml;
 
 namespace LiveBiblePresentation.Data
 {
@@ -13,7 +13,8 @@ namespace LiveBiblePresentation.Data
     { 
         RomanianCornilescu,
         EnglishKingJames,
-        EnglishAmerStd
+        EnglishAmerStd,
+        GermanLutherBible
     }
 
     public class BibleManager
@@ -94,11 +95,9 @@ namespace LiveBiblePresentation.Data
         private BibleVerses GetBible(BibleLanguage bibleLanguage)
         {
             BibleVerses bibleVerses = new BibleVerses(new List<BibleVerse>());
-            OleDbConnection conn = null;
+            OleDbConnection conn = null; XmlDocument xmlDoc = null;
             try
             {
-                conn = new OleDbConnection(ConnectionString);
-
                 string table = string.Empty;
 
                 switch (bibleLanguage)
@@ -113,20 +112,59 @@ namespace LiveBiblePresentation.Data
                         table = "bibliaEnStd";
                         break;
                 }
-
-                OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT id, carte, capitol, verset, text FROM " + table + " ORDER BY id", conn);
-                DataSet dataSet = new DataSet();
-                adapter.Fill(dataSet);
-
-                foreach (DataRow row in dataSet.Tables[0].Rows)
+                if (bibleLanguage == BibleLanguage.GermanLutherBible)
                 {
-                    BibleVerse bibleVerse = new BibleVerse();
-                    bibleVerse.ID = Convert.ToInt32(row[0]);
-                    bibleVerse.Carte = row[1].ToString();
-                    bibleVerse.Capitol = Convert.ToInt32(row[2]);
-                    bibleVerse.Verset = Convert.ToInt32(row[3]);
-                    bibleVerse.Text = row[4].ToString();
-                    bibleVerses.Add(bibleVerse);
+                    string bibleFilePath = Globals.GetBibleFilePath(bibleLanguage);
+                    if (File.Exists(bibleFilePath))
+                    {
+                        xmlDoc = new XmlDocument();
+                        // load the xml bible file
+                        xmlDoc.Load(bibleFilePath);
+                        int index = 0, chapterNumber = 0, verseNumber = 0; string bookName = string.Empty;
+                        // get all bible books
+                        XmlNodeList bookNodes = xmlDoc.SelectNodes("//b");
+                        foreach (XmlNode bookNode in bookNodes)
+                        {
+                            bookName = bookNode.AttributeInnerText("bname");
+                            foreach (XmlNode chapterNode in bookNode.ChildNodes)
+                            {
+                                // get current chapter number
+                                chapterNode.TryParseAttributeToInteger("cnumber", out chapterNumber);
+                                foreach (XmlNode verseNode in chapterNode.ChildNodes)
+                                {
+                                    // get current verse number
+                                    verseNode.TryParseAttributeToInteger("vnumber", out verseNumber);
+
+                                    BibleVerse bibleVerse = new BibleVerse();
+                                    index++;
+                                    bibleVerse.ID = index;
+                                    bibleVerse.Carte = bookName;
+                                    bibleVerse.Capitol = chapterNumber;
+                                    bibleVerse.Verset = verseNumber;
+                                    bibleVerse.Text = verseNode.InnerText;
+                                    bibleVerses.Add(bibleVerse);
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    conn = new OleDbConnection(ConnectionString);
+                    OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT id, carte, capitol, verset, text FROM " + table + " ORDER BY id", conn);
+                    DataSet dataSet = new DataSet();
+                    adapter.Fill(dataSet);
+
+                    foreach (DataRow row in dataSet.Tables[0].Rows)
+                    {
+                        BibleVerse bibleVerse = new BibleVerse();
+                        bibleVerse.ID = Convert.ToInt32(row[0]);
+                        bibleVerse.Carte = row[1].ToString();
+                        bibleVerse.Capitol = Convert.ToInt32(row[2]);
+                        bibleVerse.Verset = Convert.ToInt32(row[3]);
+                        bibleVerse.Text = row[4].ToString();
+                        bibleVerses.Add(bibleVerse);
+                    }
                 }
             }
             finally
@@ -151,7 +189,7 @@ namespace LiveBiblePresentation.Data
             {
                 if (string.IsNullOrEmpty(connectionString))
                 {
-                    string dbPath = Path.Combine(Path.GetDirectoryName(Assembly.GetEntryAssembly().Location), Resources.DbName);
+                    string dbPath = Path.Combine(Globals.AppPath, Resources.DbName);
 
                     connectionString =  Resources.ConnectionProvider + dbPath + Resources.UserCredentials;
                 }
