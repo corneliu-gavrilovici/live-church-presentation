@@ -868,6 +868,22 @@ namespace LiveBiblePresentation
             Close();
         }
 
+        private void btnDonate_Click(object sender, RoutedEventArgs e)
+        {
+            string url = "";
+
+            string business = "cornel_gav@yahoo.com";  // your paypal email
+            string currency = "USD";                 // AUD, USD, etc.
+
+            url += "https://www.paypal.com/cgi-bin/webscr" +
+                "?cmd=" + "_donations" +
+                "&business=" + business +
+                "&currency_code=" + currency +
+                "&bn=" + "PP%2dDonationsBF";
+
+            System.Diagnostics.Process.Start(url);
+        }
+
         private void btnColor1_Click(object sender, RoutedEventArgs e)
         {
             System.Windows.Controls.RichTextBox rich = (((System.Windows.Controls.Button)sender).Name == btnColor1.Name) ? richTextBox : txtText;
