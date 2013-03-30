@@ -224,5 +224,29 @@ namespace LiveBiblePresentation.Resources {
                 this["Text"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("GermanLutherBible")]
+        public global::LiveBiblePresentation.Data.BibleLanguage BibleLanguage2 {
+            get {
+                return ((global::LiveBiblePresentation.Data.BibleLanguage)(this["BibleLanguage2"]));
+            }
+            set {
+                this["BibleLanguage2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool BibleLanguage2Enabled {
+            get {
+                return ((bool)(this["BibleLanguage2Enabled"]));
+            }
+            set {
+                this["BibleLanguage2Enabled"] = value;
+            }
+        }
     }
 }

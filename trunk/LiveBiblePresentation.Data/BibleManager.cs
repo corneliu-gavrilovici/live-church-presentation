@@ -19,11 +19,20 @@ namespace LiveBiblePresentation.Data
 
     public class BibleManager
     {
+        #region Private Members
+
+        private readonly BibleVerses bible = null;
+        private readonly BibleVerses bible2 = null;
+        private string connectionString = string.Empty;
+
+        #endregion
+
         #region Constructors
 
-        public BibleManager(BibleLanguage bibleLanguage)
+        public BibleManager(BibleLanguage bibleLanguage, BibleLanguage? bibleLanguage2 = null)
         {
             bible = GetBible(bibleLanguage);
+            if (bibleLanguage2.HasValue) bible2 = GetBible(bibleLanguage2.Value);
         }
 
         #endregion
@@ -75,10 +84,20 @@ namespace LiveBiblePresentation.Data
         public BibleVerses GetVerses(int id, int noOfVerses)
         {
             int maxId = id + noOfVerses;
+            BibleVerses verses = new BibleVerses(new List<BibleVerse>());
 
-            return new BibleVerses(from b in Bible
-                                   where b.ID >= id && b.ID < maxId && Bible.Count != noOfVerses
-                                   select b);
+            verses.AddRange(from b in bible
+                            where b.ID >= id && b.ID < maxId && bible.Count != noOfVerses
+                            select b);
+
+            if (bible2 != null)
+            {
+                verses.AddRange(from b in bible2
+                                where b.ID >= id && b.ID < maxId && bible2.Count != noOfVerses
+                                select b);
+            }
+
+            return verses;
         }
 
         public BibleVerses Search(string textToSearch)
@@ -95,6 +114,7 @@ namespace LiveBiblePresentation.Data
         private BibleVerses GetBible(BibleLanguage bibleLanguage)
         {
             BibleVerses bibleVerses = new BibleVerses(new List<BibleVerse>());
+
             OleDbConnection conn = null; XmlDocument xmlDoc = null;
             try
             {
@@ -197,13 +217,6 @@ namespace LiveBiblePresentation.Data
                 return connectionString;
             }
         }
-
-        #endregion
-
-        #region Private Members
-
-        private readonly BibleVerses bible = null;
-        private string connectionString = string.Empty;
 
         #endregion
     }
