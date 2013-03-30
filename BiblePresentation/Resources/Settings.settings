@@ -53,5 +53,11 @@
     <Setting Name="Text" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="BibleLanguage2" Type="LiveBiblePresentation.Data.BibleLanguage" Scope="User">
+      <Value Profile="(Default)">GermanLutherBible</Value>
+    </Setting>
+    <Setting Name="BibleLanguage2Enabled" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

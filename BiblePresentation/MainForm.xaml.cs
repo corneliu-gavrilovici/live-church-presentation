@@ -45,7 +45,10 @@ namespace LiveBiblePresentation
 
                 InitializeNotifyIcon();
 
-                m_manager = new BibleManager(Settings.Default.BibleLanguage);
+                BibleLanguage? bibleLanguage2 = null;
+                if (Settings.Default.BibleLanguage2Enabled) bibleLanguage2 = Settings.Default.BibleLanguage2;
+
+                m_manager = new BibleManager(Settings.Default.BibleLanguage, bibleLanguage2);
                 List<string> biblleBooks = m_manager.GetBibleBooks();
                 foreach (string book in biblleBooks)
                 {
@@ -185,7 +188,7 @@ namespace LiveBiblePresentation
                 }
 
                 VerseID = m_manager.GetID((string)cbxBooks.SelectedValue, (int)cbxChapters.SelectedValue, (int)cbxVerses.SelectedValue);
-                BibleVerses verses = m_manager.GetVerses(VerseID, NoOfVerses + 1);
+                BibleVerses verses = m_manager.GetVerses(VerseID, NoOfVerses);
                 PopulateWithVerses(verses);
             }
             catch
@@ -210,12 +213,12 @@ namespace LiveBiblePresentation
             }
         }
 
-        private void btnforward_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void btnforward_Click(object sender, RoutedEventArgs e)
         {
             GetNext();
         }
 
-        private void btnback_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        private void btnback_Click(object sender, RoutedEventArgs e)
         {
             GetPrevious();
         }
@@ -364,7 +367,7 @@ namespace LiveBiblePresentation
         private void cbxNoOfVerses_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             frmLiveSettings.NoOfVerses = Convert.ToInt16(cbxNoOfVerses.SelectedItem.ToString());
-            BibleVerses verses = m_manager.GetVerses(VerseID, NoOfVerses + 1);
+            BibleVerses verses = m_manager.GetVerses(VerseID, NoOfVerses);
             PopulateWithVerses(verses);
         }
 
@@ -486,7 +489,7 @@ namespace LiveBiblePresentation
                 {
                     if (richTextBox.Document.Blocks.LastBlock == null)
                         return;
-                    mainRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.Blocks.LastBlock.ElementStart);
+                    mainRange = new TextRange(richTextBox.Document.ContentStart, richTextBox.Document.Blocks.LastBlock.ElementEnd);
                 }
                 else
                 {
@@ -553,7 +556,7 @@ namespace LiveBiblePresentation
 
             txtSearch.Clear();
             VerseID = VerseID - NoOfVerses;
-            BibleVerses bibleVerses = m_manager.GetVerses(VerseID, NoOfVerses + 1);
+            BibleVerses bibleVerses = m_manager.GetVerses(VerseID, NoOfVerses);
             PopulateWithVerses(bibleVerses);
 
             Populating(bibleVerses);
@@ -565,7 +568,7 @@ namespace LiveBiblePresentation
 
             txtSearch.Clear();
             VerseID = VerseID + NoOfVerses;
-            BibleVerses bibleVerses = m_manager.GetVerses(VerseID, NoOfVerses + 1);
+            BibleVerses bibleVerses = m_manager.GetVerses(VerseID, NoOfVerses);
             PopulateWithVerses(bibleVerses);
 
             Populating(bibleVerses);
@@ -599,7 +602,6 @@ namespace LiveBiblePresentation
                 {
                     frmLive.m_spaceKeyPressed += GetNext;
                     frmLive.m_backSpaceKeyPressed += GetPrevious;
-                    BibleVerses bibleVerses = m_manager.GetVerses(VerseID, NoOfVerses);
                     CopyContentLive();
 
                 }
@@ -658,14 +660,14 @@ namespace LiveBiblePresentation
             }
         }
 
-        private void Populating(BibleVerses bibleVerse)
+        private void Populating(BibleVerses bibleVerses)
         {
             cbxVerses.SelectionChanged -= cbx_SelectionChanged;
             cbxBooks.SelectionChanged -= cbx_SelectionChanged;
             cbxChapters.SelectionChanged -= cbx_SelectionChanged;
-            cbxBooks.Text = bibleVerse[bibleVerse.Count - NoOfVerses - 1].Carte;
-            cbxChapters.Text = bibleVerse[bibleVerse.Count - NoOfVerses - 1].Capitol.ToString();
-            cbxVerses.Text = bibleVerse[bibleVerse.Count - NoOfVerses - 1].Verset.ToString();
+            cbxBooks.Text = bibleVerses[0].Carte;
+            cbxChapters.Text = bibleVerses[0].Capitol.ToString();
+            cbxVerses.Text = bibleVerses[0].Verset.ToString();
             cbxVerses.SelectionChanged += cbx_SelectionChanged;
             cbxBooks.SelectionChanged += cbx_SelectionChanged;
             cbxChapters.SelectionChanged += cbx_SelectionChanged;
@@ -680,12 +682,6 @@ namespace LiveBiblePresentation
             {
                 Paragraph verseParagraph = new Paragraph();
 
-                if (verses.IndexOf(verse) == verses.Count - 1)
-                {
-                    verseParagraph.Foreground = Brushes.Orange;
-                    verseParagraph.Inlines.Add(new LineBreak());
-                }
-
                 if (!books.Contains(verse.Carte))
                 {
                     Run bookName = new Run(verse.Carte);
@@ -698,7 +694,6 @@ namespace LiveBiblePresentation
                 }
 
                 Run chapterVerseName = new Run(verse.Capitol.ToString() + ":" + verse.Verset.ToString());
-
 
                 chapterVerseName.MouseLeave += chapterVerseName_MouseLeave;
                 chapterVerseName.MouseDown += chapterVerseName_MouseDown;
@@ -745,7 +740,7 @@ namespace LiveBiblePresentation
         {
             goToVerseInProcess = true;
             VerseID = Convert.ToInt16(((Run)sender).Tag);
-            BibleVerses verses = m_manager.GetVerses(Convert.ToInt16(((Run)sender).Tag), NoOfVerses + 1);
+            BibleVerses verses = m_manager.GetVerses(Convert.ToInt16(((Run)sender).Tag), NoOfVerses);
             PopulateWithVerses(verses);
 
             txtSearch.Clear();
@@ -757,6 +752,13 @@ namespace LiveBiblePresentation
             cbxBibleTextLanguage.ItemsSource = Enum.GetValues(typeof(BibleLanguage));
             cbxBibleTextLanguage.SelectedValue = Settings.Default.BibleLanguage;
             cbxBibleTextLanguage.SelectionChanged += cbxBibleTextLanguage_SelectionChanged;
+
+            cbxBibleTextLanguage2.ItemsSource = Enum.GetValues(typeof(BibleLanguage));
+            cbxBibleTextLanguage2.SelectedValue = Settings.Default.BibleLanguage2;
+            cbxBibleTextLanguage2.SelectionChanged += cbxBibleTextLanguage_SelectionChanged;
+            chBxBibleLanguage2.IsChecked = Settings.Default.BibleLanguage2Enabled;
+            chBxBibleLanguage2.Checked += chBxBibleLanguage2_CheckStateChanged;
+            chBxBibleLanguage2.Unchecked += chBxBibleLanguage2_CheckStateChanged;
 
             //Populate FontSize Combo.
             for (int i = 25; i <= 70; i++)
@@ -813,8 +815,12 @@ namespace LiveBiblePresentation
         {
             Mouse.OverrideCursor = System.Windows.Input.Cursors.Wait;
             Settings.Default.BibleLanguage = (BibleLanguage)cbxBibleTextLanguage.SelectedValue;
+            Settings.Default.BibleLanguage2 = (BibleLanguage)cbxBibleTextLanguage2.SelectedValue;
             Settings.Default.Save();
-            m_manager = new BibleManager(Settings.Default.BibleLanguage);
+
+            BibleLanguage? bibleLanguage2 = null;
+            if (Settings.Default.BibleLanguage2Enabled) bibleLanguage2 = Settings.Default.BibleLanguage2;
+            m_manager = new BibleManager(Settings.Default.BibleLanguage, bibleLanguage2);
 
             List<string> biblleBooks = m_manager.GetBibleBooks();
 
@@ -831,10 +837,18 @@ namespace LiveBiblePresentation
             cbxChapters.SelectedIndex = prevSelChapterIndex;
             cbxVerses.SelectedIndex = prevSelVerseIndex;
 
-            BibleVerses verses = m_manager.GetVerses(VerseID, NoOfVerses + 1);
+            BibleVerses verses = m_manager.GetVerses(VerseID, NoOfVerses);
             PopulateWithVerses(verses);
 
             Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
+        }
+
+        private void chBxBibleLanguage2_CheckStateChanged(object sender, RoutedEventArgs e)
+        {
+            Settings.Default.BibleLanguage2Enabled = chBxBibleLanguage2.IsChecked.HasValue ? chBxBibleLanguage2.IsChecked.Value : false;
+            Settings.Default.Save();
+
+            cbxBibleTextLanguage_SelectionChanged(sender, null);
         }
 
         private void radtextAlign_CheckedChanged(object sender, RoutedEventArgs e)
@@ -871,13 +885,14 @@ namespace LiveBiblePresentation
         private void btnDonate_Click(object sender, RoutedEventArgs e)
         {
             string url = "";
-
+            string description = "Donation";           // '%20' represents a space. remember HTML!
             string business = "cornel_gav@yahoo.com";  // your paypal email
-            string currency = "USD";                 // AUD, USD, etc.
+            string currency = "USD";                   // AUD, USD, etc.
 
             url += "https://www.paypal.com/cgi-bin/webscr" +
                 "?cmd=" + "_donations" +
                 "&business=" + business +
+                "&item_name=" + description +
                 "&currency_code=" + currency +
                 "&bn=" + "PP%2dDonationsBF";
 
@@ -894,7 +909,6 @@ namespace LiveBiblePresentation
             }
             else
             {
-
                 rich.Selection.ApplyPropertyValue(ForegroundProperty, new SolidColorBrush(System.Windows.Media.Color.FromArgb(settings.SelectedTextColor.A, settings.SelectedTextColor.R, settings.SelectedTextColor.G, settings.SelectedTextColor.B)));
             }
         }

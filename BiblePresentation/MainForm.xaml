@@ -271,13 +271,30 @@
 						<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Width="Auto" Height="Auto" Grid.Row="3" Grid.RowSpan="1" x:Name="stackControlArea">
 							<Image Height="53" Cursor="Hand" x:Name="btnGO" MouseUp="btnGO_MouseUp" Width="58" ToolTip="Go Live (Ctrl+L)" Source="Resources\ACDSee.png" Stretch="Fill" Panel.ZIndex="0" Margin="0,0,0,-10"/>
 							<StackPanel Orientation="Horizontal" x:Name="stackPanel" Width="Auto" Height="46.765" HorizontalAlignment="Center">
-								<Image Width="Auto" Height="Auto" Source="Resources\back.png" Stretch="UniformToFill" Cursor="Hand" x:Name="btnback" MouseDown="btnback_MouseDown"/>
-								<ComboBox Margin="10,0,10,0" x:Name="cbxBooks" Style="{DynamicResource SimpleComboBox}" Width="130" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="-1" IsEditable="True" StaysOpenOnEdit="False" Foreground="#FFFFFFFF" TabIndex="0" SelectionChanged="cbx_SelectionChanged"/>
-								<ComboBox Margin="0,0,0,0" x:Name="cbxChapters" Style="{DynamicResource SimpleComboBox}" Width="52" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" IsEditable="True" Foreground="#FFFFFFFF" TabIndex="1" SelectionChanged="cbx_SelectionChanged"/>
+                                <Button Cursor="Hand" x:Name="btnback" Click="btnback_Click" TabIndex="0">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Border HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Image Source="Resources\back.png" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+								<ComboBox TabIndex="1" Margin="10,0,10,0" x:Name="cbxBooks" Style="{DynamicResource SimpleComboBox}" Width="130" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="-1" IsEditable="True" StaysOpenOnEdit="False" Foreground="#FFFFFFFF" SelectionChanged="cbx_SelectionChanged"/>
+								<ComboBox TabIndex="2" Margin="0,0,0,0" x:Name="cbxChapters" Style="{DynamicResource SimpleComboBox}" Width="52" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" IsEditable="True" Foreground="#FFFFFFFF" SelectionChanged="cbx_SelectionChanged"/>
 								<Label Height="21" Content=":"/>
-								<ComboBox Margin="0,0,10,0" x:Name="cbxVerses" Style="{DynamicResource SimpleComboBox}" Width="52" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" IsEditable="True" Foreground="#FFFFFFFF" TabIndex="3" SelectionChanged="cbx_SelectionChanged"/>
-								<Image Width="Auto" Height="Auto" Source="Resources\forward.png" Stretch="UniformToFill" Cursor="Hand" x:Name="btnforward" MouseDown="btnforward_MouseDown"/>
-							</StackPanel>
+								<ComboBox TabIndex="3" Margin="0,0,10,0" x:Name="cbxVerses" Style="{DynamicResource SimpleComboBox}" Width="52" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" IsEditable="True" Foreground="#FFFFFFFF" SelectionChanged="cbx_SelectionChanged"/>
+
+                                <Button TabIndex="4" Cursor="Hand" x:Name="btnforward" Click="btnforward_Click">
+                                    <Button.Template>
+                                        <ControlTemplate>
+                                            <Border HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                <Image Source="Resources\forward.png" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Button.Template>
+                                </Button>
+                            </StackPanel>
 						</StackPanel>
 						<RichTextBox Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" FontSize="{Binding Path=FontSize, Mode=Default}" Foreground="{Binding Path=TextColor, Converter={StaticResource ColorToBrushConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="richTextBox" IsReadOnly="False" Grid.Row="2" Grid.RowSpan="1" IsEnabled="True" Style="{DynamicResource RichTextBoxStyle1}" VerticalScrollBarVisibility="Auto" AcceptsTab="True">
 							<FlowDocument/>
@@ -438,10 +455,15 @@
 				<Border Visibility="Visible" Margin="0,0,5,0" x:Name="bdOptions" BorderThickness="1,0,0,0" Padding="2,0,0,0" BorderBrush="#7F9EEA9C">
 					<StackPanel Visibility="Visible" x:Name="stackPanelOpt" Width="143" Height="Auto" d:LayoutOverrides="Height">
 						<StackPanel Height="Auto" Orientation="Horizontal">
-							<TextBlock HorizontalAlignment="Stretch" Width="73" Foreground="#FFFFFFFF" Text="Bible Text Language:" TextAlignment="Left" TextWrapping="Wrap" Margin="5,0,0,0"/>
+                            <Label Width="78" Foreground="#FFFFFFFF" HorizontalContentAlignment="Left" Content="Bible 1:"/>
 							<ComboBox IsSynchronizedWithCurrentItem="True" x:Name="cbxBibleTextLanguage" Style="{DynamicResource SimpleComboBox}" Width="60"/>
 						</StackPanel>
-						<StackPanel HorizontalAlignment="Stretch" Margin="0,5,0,5" VerticalAlignment="Top" Height="Auto" Orientation="Horizontal">
+                        <StackPanel Height="Auto" Orientation="Horizontal" Margin="0,5,0,5">
+                            <Label Width="78" Foreground="#FFFFFFFF" HorizontalContentAlignment="Left" Content="Bible 2:"/>
+                            <CheckBox x:Name="chBxBibleLanguage2" VerticalAlignment="Center" Margin="0,0,2,0"></CheckBox>
+                            <ComboBox IsSynchronizedWithCurrentItem="True" x:Name="cbxBibleTextLanguage2" Style="{DynamicResource SimpleComboBox}" Width="45"/>
+                        </StackPanel>
+                        <StackPanel Margin="0,0,0,5" VerticalAlignment="Top" Orientation="Horizontal">
 							<Label Width="78" Foreground="#FFFFFFFF" HorizontalContentAlignment="Left" Content="Font Size:"/>
 							<ComboBox x:Name="cbxFontSize" Style="{DynamicResource SimpleComboBox}" Width="60" IsSynchronizedWithCurrentItem="True"/>
 						</StackPanel>
