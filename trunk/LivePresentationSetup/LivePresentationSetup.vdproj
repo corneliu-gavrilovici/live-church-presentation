@@ -15,12 +15,6 @@
     {
         "Entry"
         {
-        "MsmKey" = "8:_17C0D7457A251AFD138DF2CA8D657282"
-        "OwnerKey" = "8:_AA1E30C6F5ED4AE88CE30F7F75FBFF39"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
         "MsmKey" = "8:_24638A886E184889B34F030B3537C62A"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -39,6 +33,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_F1D5486B1B37737B26F5A168B8A87BFF"
+        "OwnerKey" = "8:_AA1E30C6F5ED4AE88CE30F7F75FBFF39"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_AA1E30C6F5ED4AE88CE30F7F75FBFF39"
         "MsmSig" = "8:_UNDEFINED"
@@ -46,7 +46,7 @@
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_17C0D7457A251AFD138DF2CA8D657282"
+        "OwnerKey" = "8:_F1D5486B1B37737B26F5A168B8A87BFF"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -131,7 +131,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "Version" = "8:3.5.20706"
+                "FrameworkVersion" = "8:3.5.20706"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=76617"
                 }
@@ -139,37 +139,6 @@
         }
         "File"
         {
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_17C0D7457A251AFD138DF2CA8D657282"
-            {
-            "AssemblyRegister" = "3:1"
-            "AssemblyIsInGAC" = "11:FALSE"
-            "AssemblyAsmDisplayName" = "8:LiveBiblePresentation.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=x86"
-                "ScatterAssemblies"
-                {
-                    "_17C0D7457A251AFD138DF2CA8D657282"
-                    {
-                    "Name" = "8:LiveBiblePresentation.Data.dll"
-                    "Attributes" = "3:512"
-                    }
-                }
-            "SourcePath" = "8:LiveBiblePresentation.Data.dll"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_AE9440A14123402495C2362216BE5300"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:TRUE"
-            "IsolateTo" = "8:"
-            }
             "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_24638A886E184889B34F030B3537C62A"
             {
             "SourcePath" = "8:..\\greenbook.ico"
@@ -210,6 +179,37 @@
             "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F1D5486B1B37737B26F5A168B8A87BFF"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:LiveBiblePresentation.Data, Version=2.0.0.1, Culture=neutral, processorArchitecture=x86"
+                "ScatterAssemblies"
+                {
+                    "_F1D5486B1B37737B26F5A168B8A87BFF"
+                    {
+                    "Name" = "8:LiveBiblePresentation.Data.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:LiveBiblePresentation.Data.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_AE9440A14123402495C2362216BE5300"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
         }
         "FileType"
         {
@@ -248,6 +248,17 @@
             "Property" = "8:TARGETDIR"
                 "Folders"
                 {
+                    "{9EF0B969-E518-4E46-987F-47570745A589}:_FB9B5971DE7047B3914A9DC3E4B6E89B"
+                    {
+                    "Name" = "8:Bibles"
+                    "AlwaysCreate" = "11:FALSE"
+                    "Condition" = "8:"
+                    "Transitive" = "11:FALSE"
+                    "Property" = "8:_E69403DE72114F9BB2401B93C49B8EAD"
+                        "Folders"
+                        {
+                        }
+                    }
                 }
             }
             "{1525181F-901A-416C-8A58-119130FE478E}:_C11AD398A5814B9EBFB996EBAE5D2B98"
@@ -277,14 +288,15 @@
         {
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Live Church Presentation"
-        "ProductCode" = "8:{A3DAF87F-66F9-4DAA-80AC-858E99A7796B}"
-        "PackageCode" = "8:{A39136DC-AFF0-4489-81A8-5001245BDCE1}"
+        "ProductCode" = "8:{D10FE1B5-3015-485C-89E8-D1AF44B6DABC}"
+        "PackageCode" = "8:{F53FBC26-EBC6-4F6D-95E1-FE5BEA7DE39B}"
         "UpgradeCode" = "8:{245202C5-FBB9-40D9-A72A-EDE32581F311}"
+        "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
         "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
-        "ProductVersion" = "8:1.0.0"
+        "ProductVersion" = "8:2.0.1"
         "Manufacturer" = "8:CornelGavrilovici"
         "ARPHELPTELEPHONE" = "8:"
         "ARPHELPLINK" = "8:"
@@ -824,6 +836,34 @@
         }
         "ProjectOutput"
         {
+            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_30FACCEDAE214864989A371DE3F4D3F8"
+            {
+            "SourcePath" = "8:"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_FB9B5971DE7047B3914A9DC3E4B6E89B"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            "ProjectOutputGroupRegister" = "3:1"
+            "OutputConfiguration" = "8:"
+            "OutputGroupCanonicalName" = "8:ContentFiles"
+            "OutputProjectGuid" = "8:{03CBF34D-D569-4F34-9D50-A358272490E4}"
+            "ShowKeyOutput" = "11:TRUE"
+                "ExcludeFilters"
+                {
+                }
+            }
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_AA1E30C6F5ED4AE88CE30F7F75FBFF39"
             {
             "SourcePath" = "8:..\\BiblePresentation\\obj\\Debug\\LiveBiblePresentation.exe"
