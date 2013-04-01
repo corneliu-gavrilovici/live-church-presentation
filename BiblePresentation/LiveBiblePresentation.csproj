@@ -202,5 +202,11 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\TextAlignCenter.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\TextAlignLeft.png" />
+    <Resource Include="Resources\TextAlignRight.png" />
+  </ItemGroup>
 </Project>
