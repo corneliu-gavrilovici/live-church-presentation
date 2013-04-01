@@ -318,13 +318,19 @@ namespace LiveBiblePresentation
             }
         }
 
+        private void btnHelp_Click(object sender, RoutedEventArgs e)
+        {
+            string command = "mailto:cornel_gav@yahoo.com?subject=" + Properties.Resource.ApplicationName;
+            System.Diagnostics.Process.Start(command); 
+        }
+
         #region Options Event Handlers
 
         private void btnImage_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog openFileDialog = new Microsoft.Win32.OpenFileDialog();
-            openFileDialog.Filter = "JPEG Compressed Image (*.jpg)|*.jpg|Windows Bitmap (*.bmp)|*.bmp| Portable Network Graphics (*.png) |*.png | Graphics Interchange Format (*.gif)| *.gif";
-            if (openFileDialog.ShowDialog().Value == true)
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Portable Network Graphics (*.png)|*.png|JPEG Compressed Image (*.jpg)|*.jpg|Windows Bitmap (*.bmp)|*.bmp|Graphics Interchange Format (*.gif)|*.gif";
+            if (openFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 frmLiveSettings.BackgroundImagePath = openFileDialog.FileName;
                 if (frmLive != null)

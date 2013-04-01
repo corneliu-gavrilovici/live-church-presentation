@@ -13,8 +13,8 @@ namespace LiveBiblePresentation.Data
     { 
         RomanianCornilescu,
         EnglishKingJames,
-        EnglishAmerStd,
-        GermanLutherBible
+        GermanLutherBible,
+        FrenchLouisSegond
     }
 
     public class BibleManager
@@ -118,60 +118,10 @@ namespace LiveBiblePresentation.Data
             OleDbConnection conn = null; XmlDocument xmlDoc = null;
             try
             {
-                string table = string.Empty;
-
-                switch (bibleLanguage)
-                {
-                    case BibleLanguage.RomanianCornilescu:
-                        table = "bibliaRoCornilescu";
-                        break;
-                    case BibleLanguage.EnglishKingJames:
-                        table = "bibliaEnKJ";
-                        break;
-                    case BibleLanguage.EnglishAmerStd:
-                        table = "bibliaEnStd";
-                        break;
-                }
-                if (bibleLanguage == BibleLanguage.GermanLutherBible)
-                {
-                    string bibleFilePath = Globals.GetBibleFilePath(bibleLanguage);
-                    if (File.Exists(bibleFilePath))
-                    {
-                        xmlDoc = new XmlDocument();
-                        // load the xml bible file
-                        xmlDoc.Load(bibleFilePath);
-                        int index = 0, chapterNumber = 0, verseNumber = 0; string bookName = string.Empty;
-                        // get all bible books
-                        XmlNodeList bookNodes = xmlDoc.SelectNodes("//b");
-                        foreach (XmlNode bookNode in bookNodes)
-                        {
-                            bookName = bookNode.AttributeInnerText("bname");
-                            foreach (XmlNode chapterNode in bookNode.ChildNodes)
-                            {
-                                // get current chapter number
-                                chapterNode.TryParseAttributeToInteger("cnumber", out chapterNumber);
-                                foreach (XmlNode verseNode in chapterNode.ChildNodes)
-                                {
-                                    // get current verse number
-                                    verseNode.TryParseAttributeToInteger("vnumber", out verseNumber);
-
-                                    BibleVerse bibleVerse = new BibleVerse();
-                                    index++;
-                                    bibleVerse.ID = index;
-                                    bibleVerse.Carte = bookName;
-                                    bibleVerse.Capitol = chapterNumber;
-                                    bibleVerse.Verset = verseNumber;
-                                    bibleVerse.Text = verseNode.InnerText;
-                                    bibleVerses.Add(bibleVerse);
-                                }
-                            }
-                        }
-                    }
-                }
-                else
+                if (bibleLanguage == BibleLanguage.RomanianCornilescu)
                 {
                     conn = new OleDbConnection(ConnectionString);
-                    OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT id, carte, capitol, verset, text FROM " + table + " ORDER BY id", conn);
+                    OleDbDataAdapter adapter = new OleDbDataAdapter("SELECT id, carte, capitol, verset, text FROM bibliaRoCornilescu ORDER BY id", conn);
                     DataSet dataSet = new DataSet();
                     adapter.Fill(dataSet);
 
@@ -184,6 +134,43 @@ namespace LiveBiblePresentation.Data
                         bibleVerse.Verset = Convert.ToInt32(row[3]);
                         bibleVerse.Text = row[4].ToString();
                         bibleVerses.Add(bibleVerse);
+                    }
+                }
+                else
+                {
+                    string bibleFilePath = Globals.GetBibleFilePath(bibleLanguage);
+                    if (File.Exists(bibleFilePath))
+                    {
+                        xmlDoc = new XmlDocument();
+                        // load the xml bible file
+                        xmlDoc.Load(bibleFilePath);
+                        int index = 0, chapterNumber = 0, verseNumber = 0; string bookName = string.Empty;
+                        AttributeNames attrs = AttributeNames.GetBibleAttributeNames(bibleLanguage);
+                        // get all bible books
+                        XmlNodeList bookNodes = xmlDoc.SelectNodes("//b");
+                        foreach (XmlNode bookNode in bookNodes)
+                        {
+                            bookName = bookNode.AttributeInnerText(attrs.Book);
+                            foreach (XmlNode chapterNode in bookNode.ChildNodes)
+                            {
+                                // get current chapter number
+                                chapterNode.TryParseAttributeToInteger(attrs.Chapter, out chapterNumber);
+                                foreach (XmlNode verseNode in chapterNode.ChildNodes)
+                                {
+                                    // get current verse number
+                                    verseNode.TryParseAttributeToInteger(attrs.Verse, out verseNumber);
+
+                                    BibleVerse bibleVerse = new BibleVerse();
+                                    index++;
+                                    bibleVerse.ID = index;
+                                    bibleVerse.Carte = bookName;
+                                    bibleVerse.Capitol = chapterNumber;
+                                    bibleVerse.Verset = verseNumber;
+                                    bibleVerse.Text = verseNode.InnerText;
+                                    bibleVerses.Add(bibleVerse);
+                                }
+                            }
+                        }
                     }
                 }
             }
