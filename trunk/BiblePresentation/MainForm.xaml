@@ -494,12 +494,18 @@
                             <Button Cursor="Hand" Style="{DynamicResource ButtonStyle1}" ToolTip="Choose Color" Width="60" Height="25" Content="..." x:Name="btnSelectedTextColor" Click="btnSelectedTextColor_Click"/>
 						</StackPanel>
 						<StackPanel Height="Auto" Orientation="Horizontal">
-							<TextBlock Text="Text Align:" TextWrapping="Wrap" Foreground="#FFFFFFFF" Margin="5,0,0,0" Width="73"/>
-							<StackPanel Width="Auto">
-								<RadioButton Foreground="#FFFFFFFF" Style="{DynamicResource RadioButtonStyle}" Width="60" Height="Auto" Content="Left" IsChecked="True" x:Name="radLeft"/>
-								<RadioButton Foreground="#FFFFFFFF" Style="{DynamicResource RadioButtonStyle}" Width="60" Height="Auto" Content="Center" IsChecked="False" x:Name="radCenter"/>
-								<RadioButton Foreground="#FFFFFFFF" Style="{DynamicResource RadioButtonStyle}" Width="60" Height="Auto" Content="Right" IsChecked="False" x:Name="radRight"/>
-							</StackPanel>
+							<TextBlock Text="Text Align:" TextWrapping="Wrap" Foreground="#FFFFFFFF" Margin="5,0,0,0" Width="63"/>
+							<StackPanel Orientation="Horizontal">
+                                <RadioButton ToolTip="Left" Foreground="#FFFFFFFF" Style="{DynamicResource RadioButtonStyle}" Width="25" Height="Auto" IsChecked="True" x:Name="radLeft">
+                                    <Image Source="Resources\TextAlignLeft.png" Stretch="None"></Image>
+                                </RadioButton>
+                                <RadioButton ToolTip="Center" Foreground="#FFFFFFFF" Style="{DynamicResource RadioButtonStyle}" Width="25" Height="Auto" IsChecked="False" x:Name="radCenter">
+                                    <Image Source="Resources\TextAlignCenter.png" Stretch="None"></Image>
+                                </RadioButton>
+                                <RadioButton ToolTip="Right" Foreground="#FFFFFFFF" Style="{DynamicResource RadioButtonStyle}" Width="25" Height="Auto" IsChecked="False" x:Name="radRight">
+                                    <Image Source="Resources\TextAlignRight.png" Stretch="None"></Image>
+                                </RadioButton>
+                            </StackPanel>
 						</StackPanel>
                         <TextBlock HorizontalAlignment="Left" Margin="5,5,0,5" VerticalAlignment="Center" Foreground="#FFFFFFFF" Text="Live Verses Location/Size:" TextWrapping="Wrap"/>
 						<Grid Height="Auto" HorizontalAlignment="Right">

@@ -40,8 +40,16 @@
 
 	<Grid Margin="0,0,0,0" x:Name="mainGrid">
 		<Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" x:Name="imgBack" Stretch="Fill"/>
-		<RichTextBox Background="{x:Null}" BorderBrush="{x:Null}" FontSize="{Binding Path=FontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding Path=TextColor, Converter={StaticResource ColorToBrushConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" x:Name="richTextBox" VerticalAlignment="Stretch" IsReadOnly="True"/>
-		<Border Opacity="0" Margin="0,0,0,1" x:Name="border" VerticalAlignment="Bottom" Height="Auto" BorderBrush="#FF424242" BorderThickness="1,2,1,1" CornerRadius="10,10,0,0">
+        <RichTextBox Background="{x:Null}" BorderBrush="{x:Null}" FontSize="{Binding Path=FontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding Path=TextColor, Converter={StaticResource ColorToBrushConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" x:Name="richTextBox" VerticalAlignment="Stretch" IsReadOnly="True">
+            <RichTextBox.Effect>
+                <DropShadowEffect ShadowDepth="1"
+                        Direction="330"
+                        Color="Black"
+                        Opacity="0.5"
+                        BlurRadius="4"/>
+            </RichTextBox.Effect>
+        </RichTextBox>
+        <Border Opacity="0" Margin="0,0,0,1" x:Name="border" VerticalAlignment="Bottom" Height="Auto" BorderBrush="#FF424242" BorderThickness="1,2,1,1" CornerRadius="10,10,0,0">
 			<Border.Background>
 				<LinearGradientBrush EndPoint="0.51,-0.422" StartPoint="0.51,0.795">
 					<GradientStop Color="#FF000000" Offset="0.452"/>
