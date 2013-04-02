@@ -79,8 +79,10 @@ namespace LiveBiblePresentation
                 {
                     FontsComboBox.Items.Add(fontFamily.Source);
                     FontsComboBox1.Items.Add(fontFamily.Source);
+                    cbxFontFamily.Items.Add(fontFamily.Source);
                 }
-
+                cbxFontFamily.Text = frmLiveSettings.FontFamily.Source;
+                cbxFontFamily.SelectionChanged += cbxFontFamily_SelectionChanged;
                 Show();
             }
             catch (Exception ex)
@@ -382,6 +384,11 @@ namespace LiveBiblePresentation
             frmLiveSettings.FontSize = Convert.ToDouble(cbxFontSize.SelectedItem.ToString());
         }
 
+        private void cbxFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            frmLiveSettings.FontFamily = new System.Windows.Media.FontFamily(cbxFontFamily.SelectedItem.ToString());
+        }
+
         private void cbxDisplays_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             frmLiveSettings.DisplayNo = Convert.ToInt16(cbxDisplays.SelectedItem.ToString());
@@ -445,6 +452,29 @@ namespace LiveBiblePresentation
             if (frmLive != null)
             {
                 frmLive.imgBack.Source = null;
+            }
+        }
+
+        private void btnTextShadow_Click(object sender, RoutedEventArgs e)
+        {
+            frmTextShadowSettings = null;
+            foreach (Window w in OwnedWindows)
+            {
+                if (w is FrmShadowSettings)
+                {
+                    frmTextShadowSettings = w as FrmShadowSettings;
+                    break;
+                }
+            }
+            if (frmTextShadowSettings == null)
+            {
+                frmTextShadowSettings = new FrmShadowSettings(frmLive, frmLiveSettings);
+                frmTextShadowSettings.Owner = this;
+                frmTextShadowSettings.Show();
+            }
+            else
+            {
+                frmTextShadowSettings.Focus();
             }
         }
 
@@ -520,21 +550,6 @@ namespace LiveBiblePresentation
             BibleVerses verses = m_manager.Search(txtSearch.Text);
             PopulateWithVerses(verses);
 
-            if (txtSearch.ToolTip != null)
-            {
-                ((System.Windows.Controls.ToolTip)txtSearch.ToolTip).IsOpen = false;
-            }
-            System.Windows.Controls.ToolTip toolTip = new System.Windows.Controls.ToolTip();
-            toolTip.Background = Background;
-            toolTip.BorderBrush = BorderBrush;
-            toolTip.Foreground = Brushes.White;
-            toolTip.Content = "Found in " + verses.Count.ToString() + " verses";
-            toolTip.IsOpen = true;
-            toolTip.PlacementTarget = txtSearch;
-            toolTip.Placement = PlacementMode.Bottom;
-            toolTip.StaysOpen = false;
-            txtSearch.ToolTip = toolTip;
-
             Mouse.OverrideCursor = System.Windows.Input.Cursors.Arrow;
         }
 
@@ -596,6 +611,7 @@ namespace LiveBiblePresentation
             try
             {
                 frmLive = new FrmLive();
+                if (frmTextShadowSettings != null) frmTextShadowSettings.FrmLive = frmLive;
                 frmLive.Closed += frmLive_Closed;
                 frmLive.DataContext = frmLiveSettings;
 
@@ -687,14 +703,13 @@ namespace LiveBiblePresentation
             foreach (BibleVerse verse in verses)
             {
                 Paragraph verseParagraph = new Paragraph();
+                verseParagraph.Margin = new Thickness(0, 0, 0, 40);
 
                 if (!books.Contains(verse.Carte))
                 {
                     Run bookName = new Run(verse.Carte);
                     bookName.FontWeight = FontWeights.UltraBold;
                     verseParagraph.Inlines.Add(bookName);
-
-                    verseParagraph.Inlines.Add(new LineBreak());
                     verseParagraph.Inlines.Add(new LineBreak());
                     books.Add(verse.Carte);
                 }
@@ -930,6 +945,7 @@ namespace LiveBiblePresentation
         private FrmLiveSettings frmLiveSettings = null;
         private FrmSplash splash = null;
         private bool goToVerseInProcess = false;
+        private FrmShadowSettings frmTextShadowSettings = null;
 
         #endregion
     }
