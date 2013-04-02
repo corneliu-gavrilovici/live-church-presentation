@@ -9,7 +9,7 @@
 	xmlns:my="clr-namespace:LiveBiblePresentation"
 	x:Class="LiveBiblePresentation.MainForm"
 	x:Name="Window"
-	Width="664" Height="519" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" Icon="Resources\greenbook.png" IsTabStop="False" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Closed="Window_Closed" MinHeight="570" MinWidth="750" Padding="0,0,0,0" ResizeMode="CanResizeWithGrip" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
+	Width="664" Height="519" Loaded="Window_Loaded" AllowsTransparency="True" WindowStyle="None" Background="{x:Null}" Icon="Resources\greenbook.png" IsTabStop="False" WindowStartupLocation="CenterScreen" KeyDown="Window_KeyDown" Closed="Window_Closed" MinHeight="570" MinWidth="750" Padding="0,0,0,0" ResizeMode="CanResizeWithGrip" xmlns:d="http://schemas.microsoft.com/expression/blend/2008">
 
 	<Window.Resources>
 		<LiveBiblePresentation_ValueConverters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
@@ -269,10 +269,77 @@
 							<RowDefinition Height="0.893*"/>
 							<RowDefinition Height="Auto" MinHeight="46.765"/>
 						</Grid.RowDefinitions>
-						<StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Width="Auto" Height="Auto" Grid.Row="3" Grid.RowSpan="1" x:Name="stackControlArea">
-							<Image Height="53" Cursor="Hand" x:Name="btnGO" MouseUp="btnGO_MouseUp" Width="58" ToolTip="Go Live (Ctrl+L)" Source="Resources\ACDSee.png" Stretch="Fill" Panel.ZIndex="0" Margin="0,0,0,-10"/>
-							<StackPanel Orientation="Horizontal" x:Name="stackPanel" Width="Auto" Height="46.765" HorizontalAlignment="Center">
-                                <Button Cursor="Hand" x:Name="btnback" Click="btnback_Click" TabIndex="0">
+                        <ToolBar x:Name="mainToolBar" Margin="0,5,0,0" Grid.Row="1" Background="{x:Null}" Style="{DynamicResource ToolBarStyle}" Height="30" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BrushBtnBack}" Padding="0,0,0,0">
+                            <Button  Command="ApplicationCommands.Cut" ToolTip="Cut" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\EditCut.png"/>
+                            </Button>
+                            <Button  Command="ApplicationCommands.Copy" ToolTip="Copy" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\EditCopy.png"/>
+                            </Button>
+                            <Button  Command="ApplicationCommands.Paste" ToolTip="Paste" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\EditPaste.png"/>
+                            </Button>
+
+                            <ComboBox x:Name="FontsComboBox" Width="120" SelectionChanged="FontsComboBox_SelectionChanged" Style="{DynamicResource SimpleComboBox}" />
+
+                            <Button  Command="ApplicationCommands.Undo" ToolTip="Undo" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\EditUndo.png"/>
+                            </Button>
+                            <Button  Command="ApplicationCommands.Redo" ToolTip="Redo" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\EditRedo.png"/>
+                            </Button>
+
+                            <Button  Command="EditingCommands.ToggleBold" ToolTip="Bold" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <TextBlock FontWeight="Bold"><Run Text="B"/></TextBlock>
+                            </Button>
+                            <Button  Command="EditingCommands.ToggleItalic" ToolTip="Italic" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <TextBlock FontStyle="Italic" FontWeight="Bold"><Run Text="I"/></TextBlock>
+                            </Button>
+                            <Button  Command="EditingCommands.ToggleUnderline" ToolTip="Underline" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <TextBlock TextDecorations="Underline" FontWeight="Bold"><Run Text="U"/></TextBlock>
+                            </Button>
+                            <Button ToolTip="Change Selected Text Color" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto" IsEnabled="True" x:Name="btnColor1" Click="btnColor1_Click">
+                                <TextBlock FontWeight="Bold" Text="C"/>
+                            </Button>
+                            <Button  Command="EditingCommands.IncreaseFontSize" ToolTip="Grow Font" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\CharacterGrowFont.png"/>
+                            </Button>
+                            <Button  Command="EditingCommands.DecreaseFontSize" ToolTip="Shrink Font" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\CharacterShrinkFont.png"/>
+                            </Button>
+
+                            <Button  Command="EditingCommands.ToggleBullets" ToolTip="Bullets" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\ListBullets.png"/>
+                            </Button>
+                            <Button  Command="EditingCommands.ToggleNumbering" ToolTip="Numbering" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images/ListNumbering.png"/>
+                            </Button>
+                            <Button  Command="EditingCommands.AlignLeft" ToolTip="Align Left" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\ParagraphLeftJustify.png"/>
+                            </Button>
+                            <Button  Command="EditingCommands.AlignCenter" ToolTip="Align Center" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\ParagraphCenterJustify.png"/>
+                            </Button>
+                            <Button  Command="EditingCommands.AlignRight" ToolTip="Align Right" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\ParagraphRightJustify.png"/>
+                            </Button>
+                            <Button  Command="EditingCommands.AlignJustify" ToolTip="Align Justify" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\ParagraphFullJustify.png"/>
+                            </Button>
+                            <Button  Command="EditingCommands.IncreaseIndentation" ToolTip="Increase Indent" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\ParagraphIncreaseIndentation.png"/>
+                            </Button>
+                            <Button  Command="EditingCommands.DecreaseIndentation" ToolTip="Decrease Indent" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
+                                <Image Source="Images\ParagraphDecreaseIndentation.png"/>
+                            </Button>
+                        </ToolBar>
+                        <RichTextBox FontSize="15" Background="{x:Null}" Foreground="White" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" FontFamily="{Binding Path=FontFamily, Mode=Default}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="richTextBox" IsReadOnly="False" Grid.Row="2" Grid.RowSpan="1" IsEnabled="True" Style="{DynamicResource RichTextBoxStyle1}" VerticalScrollBarVisibility="Auto" AcceptsTab="True">
+							<FlowDocument/>
+						</RichTextBox>
+                        <StackPanel HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Width="Auto" Height="Auto" Grid.Row="3" Grid.RowSpan="1" x:Name="stackControlArea">
+                            <Image Height="53" Cursor="Hand" x:Name="btnGO" MouseUp="btnGO_MouseUp" Width="58" ToolTip="Go Live (Ctrl+L)" Source="Resources\ACDSee.png" Stretch="Fill" Panel.ZIndex="0" Margin="0,0,0,-10"/>
+                            <StackPanel Orientation="Horizontal" x:Name="stackPanel" Width="Auto" Height="46.765" HorizontalAlignment="Center">
+                                <Button Cursor="Hand" x:Name="btnback" Click="btnback_Click">
                                     <Button.Template>
                                         <ControlTemplate>
                                             <Border HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -281,12 +348,12 @@
                                         </ControlTemplate>
                                     </Button.Template>
                                 </Button>
-								<ComboBox TabIndex="1" Margin="10,0,10,0" x:Name="cbxBooks" Style="{DynamicResource SimpleComboBox}" Width="130" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="-1" IsEditable="True" StaysOpenOnEdit="False" Foreground="#FFFFFFFF" SelectionChanged="cbx_SelectionChanged"/>
-								<ComboBox TabIndex="2" Margin="0,0,0,0" x:Name="cbxChapters" Style="{DynamicResource SimpleComboBox}" Width="52" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" IsEditable="True" Foreground="#FFFFFFFF" SelectionChanged="cbx_SelectionChanged"/>
-								<Label Height="21" Content=":"/>
-								<ComboBox TabIndex="3" Margin="0,0,10,0" x:Name="cbxVerses" Style="{DynamicResource SimpleComboBox}" Width="52" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" IsEditable="True" Foreground="#FFFFFFFF" SelectionChanged="cbx_SelectionChanged"/>
+                                <ComboBox Margin="10,0,10,0" x:Name="cbxBooks" Style="{DynamicResource SimpleComboBox}" Width="130" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="-1" IsEditable="True" StaysOpenOnEdit="False" Foreground="#FFFFFFFF" SelectionChanged="cbx_SelectionChanged"/>
+                                <ComboBox Margin="0,0,0,0" x:Name="cbxChapters" Style="{DynamicResource SimpleComboBox}" Width="52" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" IsEditable="True" Foreground="#FFFFFFFF" SelectionChanged="cbx_SelectionChanged"/>
+                                <TextBlock Text=":" VerticalAlignment="Center"/>
+                                <ComboBox Margin="0,0,10,0" x:Name="cbxVerses" Style="{DynamicResource SimpleComboBox}" Width="52" Height="21" IsSynchronizedWithCurrentItem="True" SelectedIndex="0" IsEditable="True" Foreground="#FFFFFFFF" SelectionChanged="cbx_SelectionChanged"/>
 
-                                <Button TabIndex="4" Cursor="Hand" x:Name="btnforward" Click="btnforward_Click">
+                                <Button Cursor="Hand" x:Name="btnforward" Click="btnforward_Click">
                                     <Button.Template>
                                         <ControlTemplate>
                                             <Border HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -296,75 +363,7 @@
                                     </Button.Template>
                                 </Button>
                             </StackPanel>
-						</StackPanel>
-                        <RichTextBox Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" FontFamily="{Binding Path=FontFamily, Mode=Default}" FontSize="{Binding Path=FontSize, Mode=Default}" Foreground="{Binding Path=TextColor, Converter={StaticResource ColorToBrushConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="richTextBox" IsReadOnly="False" Grid.Row="2" Grid.RowSpan="1" IsEnabled="True" Style="{DynamicResource RichTextBoxStyle1}" VerticalScrollBarVisibility="Auto" AcceptsTab="True">
-							<FlowDocument/>
-						</RichTextBox>
-						<ToolBar x:Name="mainToolBar" Margin="0,5,0,0" Grid.Row="1" Background="{x:Null}" Style="{DynamicResource ToolBarStyle}" Height="30" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BrushBtnBack}" Padding="0,0,0,0">
-
-							<Button  Command="ApplicationCommands.Cut" ToolTip="Cut" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\EditCut.png"/>
-							</Button>
-							<Button  Command="ApplicationCommands.Copy" ToolTip="Copy" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\EditCopy.png"/>
-							</Button>
-							<Button  Command="ApplicationCommands.Paste" ToolTip="Paste" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\EditPaste.png"/>
-							</Button>
-
-							<ComboBox x:Name="FontsComboBox" Width="120" SelectionChanged="FontsComboBox_SelectionChanged" Style="{DynamicResource SimpleComboBox}" />
-
-							<Button  Command="ApplicationCommands.Undo" ToolTip="Undo" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\EditUndo.png"/>
-							</Button>
-							<Button  Command="ApplicationCommands.Redo" ToolTip="Redo" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\EditRedo.png"/>
-							</Button>
-
-							<Button  Command="EditingCommands.ToggleBold" ToolTip="Bold" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<TextBlock FontWeight="Bold"><Run Text="B"/></TextBlock>
-							</Button>
-							<Button  Command="EditingCommands.ToggleItalic" ToolTip="Italic" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<TextBlock FontStyle="Italic" FontWeight="Bold"><Run Text="I"/></TextBlock>
-							</Button>
-							<Button  Command="EditingCommands.ToggleUnderline" ToolTip="Underline" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<TextBlock TextDecorations="Underline" FontWeight="Bold"><Run Text="U"/></TextBlock>
-							</Button>
-							<Button ToolTip="Change Selected Text Color" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto" IsEnabled="True" x:Name="btnColor1" Click="btnColor1_Click">
-								<TextBlock FontWeight="Bold" Text="C"/>
-							</Button>
-							<Button  Command="EditingCommands.IncreaseFontSize" ToolTip="Grow Font" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\CharacterGrowFont.png"/>
-							</Button>
-							<Button  Command="EditingCommands.DecreaseFontSize" ToolTip="Shrink Font" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\CharacterShrinkFont.png"/>
-							</Button>
-
-							<Button  Command="EditingCommands.ToggleBullets" ToolTip="Bullets" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\ListBullets.png"/>
-							</Button>
-							<Button  Command="EditingCommands.ToggleNumbering" ToolTip="Numbering" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images/ListNumbering.png"/>
-							</Button>
-							<Button  Command="EditingCommands.AlignLeft" ToolTip="Align Left" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\ParagraphLeftJustify.png"/>
-							</Button>
-							<Button  Command="EditingCommands.AlignCenter" ToolTip="Align Center" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\ParagraphCenterJustify.png"/>
-							</Button>
-							<Button  Command="EditingCommands.AlignRight" ToolTip="Align Right" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\ParagraphRightJustify.png"/>
-							</Button>
-							<Button  Command="EditingCommands.AlignJustify" ToolTip="Align Justify" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\ParagraphFullJustify.png"/>
-							</Button>
-							<Button  Command="EditingCommands.IncreaseIndentation" ToolTip="Increase Indent" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\ParagraphIncreaseIndentation.png"/>
-							</Button>
-							<Button  Command="EditingCommands.DecreaseIndentation" ToolTip="Decrease Indent" FontFamily="Palatino" FontSize="14" Width="30" Height="Auto">
-								<Image Source="Images\ParagraphDecreaseIndentation.png"/>
-							</Button>
-						</ToolBar>
+                        </StackPanel>
 					</Grid>
 				</TabItem>
 				<TabItem x:Name="tabItemText" Header="Text" Style="{DynamicResource TabItemStyle1}" Width="115" Height="25">

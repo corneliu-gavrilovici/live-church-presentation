@@ -57,7 +57,6 @@ namespace LiveBiblePresentation
 
                 VerseID = Settings.Default.VerseID;
                 cbxBooks.Text = biblleBooks[0];
-                cbxBooks.Focus();
 
                 PopulateSettingsControls();
                 EventManager.RegisterClassHandler(typeof(System.Windows.Controls.Button), System.Windows.Controls.Button.ClickEvent, new RoutedEventHandler(Button_Click));
@@ -75,6 +74,12 @@ namespace LiveBiblePresentation
                 richTextBox.TextChanged += richTextBox_TextChanged;
                 richTextBox.SelectionChanged += richTextBox_SelectionChanged;
                 txtText.SelectionChanged += richTextBox_SelectionChanged;
+
+                cbxBooks.KeyDown += cbx_KeyDown;
+                cbxChapters.KeyDown += cbx_KeyDown;
+                cbxVerses.KeyDown += cbx_KeyDown;
+
+                // populate fonts drop downs
                 foreach (FontFamily fontFamily in Fonts.SystemFontFamilies)
                 {
                     FontsComboBox.Items.Add(fontFamily.Source);
@@ -83,6 +88,7 @@ namespace LiveBiblePresentation
                 }
                 cbxFontFamily.Text = frmLiveSettings.FontFamily.Source;
                 cbxFontFamily.SelectionChanged += cbxFontFamily_SelectionChanged;
+
                 Show();
             }
             catch (Exception ex)
@@ -275,6 +281,11 @@ namespace LiveBiblePresentation
             this.Activate();
         }
 
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            cbxBooks.Focus();
+        }
+
         private void Window_Closed(object sender, EventArgs e)
         {
             if (notifyIcon != null)
@@ -326,6 +337,21 @@ namespace LiveBiblePresentation
             System.Diagnostics.Process.Start(command); 
         }
 
+        private void cbx_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (sender == cbxBooks)
+                    cbxChapters.Focus();
+                else if (sender == cbxChapters)
+                    cbxVerses.Focus();
+                else if (sender == cbxVerses)
+                {
+                    btnforward.RaiseEvent(new RoutedEventArgs(System.Windows.Controls.Button.ClickEvent));
+                }
+            }
+        }
+
         #region Options Event Handlers
 
         private void btnImage_Click(object sender, RoutedEventArgs e)
@@ -351,7 +377,9 @@ namespace LiveBiblePresentation
                 frmLiveSettings.TextColor = colorDialog.Color;
                 if (frmLive != null)
                 {
-                    ((FrmLiveSettings)frmLive.DataContext).TextColor = colorDialog.Color;
+                    TextRange range = new TextRange(frmLive.richTextBox.Document.ContentStart, frmLive.richTextBox.Document.ContentEnd);
+                    range.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(System.Windows.Media.Color.FromArgb(frmLiveSettings.TextColor.A, frmLiveSettings.TextColor.R,
+                                            frmLiveSettings.TextColor.G, frmLiveSettings.TextColor.B)));
                 }
             }
         }
@@ -382,6 +410,12 @@ namespace LiveBiblePresentation
         private void cbxFontSize_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             frmLiveSettings.FontSize = Convert.ToDouble(cbxFontSize.SelectedItem.ToString());
+
+            if (frmLive != null)
+            {
+                TextRange range = new TextRange(frmLive.richTextBox.Document.ContentStart, frmLive.richTextBox.Document.ContentEnd);
+                range.ApplyPropertyValue(TextElement.FontSizeProperty, frmLiveSettings.FontSize);
+            }
         }
 
         private void cbxFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -537,6 +571,9 @@ namespace LiveBiblePresentation
 
                 TextRange liveRange = new TextRange(frmLive.richTextBox.Document.ContentStart, frmLive.richTextBox.Document.ContentEnd);
                 liveRange.Load(stream, System.Windows.DataFormats.Xaml);
+                liveRange.ApplyPropertyValue(TextElement.FontSizeProperty, frmLiveSettings.FontSize);
+                liveRange.ApplyPropertyValue(TextElement.ForegroundProperty, new SolidColorBrush(System.Windows.Media.Color.FromArgb(frmLiveSettings.TextColor.A, frmLiveSettings.TextColor.R, 
+                    frmLiveSettings.TextColor.G, frmLiveSettings.TextColor.B)));
                 stream.Close();
             }
         }
@@ -703,13 +740,13 @@ namespace LiveBiblePresentation
             foreach (BibleVerse verse in verses)
             {
                 Paragraph verseParagraph = new Paragraph();
-                verseParagraph.Margin = new Thickness(0, 0, 0, 40);
 
                 if (!books.Contains(verse.Carte))
                 {
                     Run bookName = new Run(verse.Carte);
                     bookName.FontWeight = FontWeights.UltraBold;
                     verseParagraph.Inlines.Add(bookName);
+                    verseParagraph.Inlines.Add(new LineBreak());
                     verseParagraph.Inlines.Add(new LineBreak());
                     books.Add(verse.Carte);
                 }
