@@ -143,10 +143,10 @@ namespace LiveBiblePresentation.Resources {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("White")]
-        public global::System.Drawing.Color ShadowColor {
+        [global::System.Configuration.DefaultSettingValueAttribute("#FFF5F5F5")]
+        public global::System.Windows.Media.Color ShadowColor {
             get {
-                return ((global::System.Drawing.Color)(this["ShadowColor"]));
+                return ((global::System.Windows.Media.Color)(this["ShadowColor"]));
             }
             set {
                 this["ShadowColor"] = value;
@@ -246,6 +246,66 @@ namespace LiveBiblePresentation.Resources {
             }
             set {
                 this["BibleLanguage2Enabled"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0.5")]
+        public double ShadowOpacity {
+            get {
+                return ((double)(this["ShadowOpacity"]));
+            }
+            set {
+                this["ShadowOpacity"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public double ShadowBlurRadius {
+            get {
+                return ((double)(this["ShadowBlurRadius"]));
+            }
+            set {
+                this["ShadowBlurRadius"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("315")]
+        public double ShadowDirection {
+            get {
+                return ((double)(this["ShadowDirection"]));
+            }
+            set {
+                this["ShadowDirection"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("4")]
+        public double ShadowDepth {
+            get {
+                return ((double)(this["ShadowDepth"]));
+            }
+            set {
+                this["ShadowDepth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Segoe UI")]
+        public string FontFamily {
+            get {
+                return ((string)(this["FontFamily"]));
+            }
+            set {
+                this["FontFamily"] = value;
             }
         }
     }

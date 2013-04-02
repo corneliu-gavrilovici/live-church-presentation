@@ -259,7 +259,7 @@
                     <Button Content="X" x:Name="btnClose" Background="{x:Null}" BorderBrush="{x:Null}" Height="20" Width="20" Click="btnClose_Click" Cursor="Hand" Foreground="#FFFFFFFF" ToolTip="Close" FontWeight="Bold"/>
                 </StackPanel>
             </Grid>
-            <TextBox ToolTip="Search Bible" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFFFFFFF" x:Name="txtSearch" Style="{DynamicResource SimpleTextBox}" Width="145" Height="25" Text="" TextWrapping="Wrap" KeyDown="txtSearch_KeyDown" HorizontalAlignment="Right" Margin="0,25,6,0"/>
+            <TextBox Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FFFFFFFF" x:Name="txtSearch" Style="{DynamicResource SimpleTextBox}" Width="145" Height="25" Text="" TextWrapping="Wrap" KeyDown="txtSearch_KeyDown" HorizontalAlignment="Right" Margin="0,25,6,0"/>
 			<TabControl IsSynchronizedWithCurrentItem="True" Background="{x:Null}" BorderBrush="{x:Null}" Margin="20,-39,0,5" x:Name="tabControl" Style="{DynamicResource TabControlStyle1}" HorizontalAlignment="Stretch" Grid.Row="1">
 				<TabItem x:Name="tabItemBible" Header="Bible" Style="{DynamicResource TabItemStyle1}" Width="115" Height="25" Margin="-2,-2,0,-2">
 					<Grid x:Name="gridBible">
@@ -297,7 +297,7 @@
                                 </Button>
                             </StackPanel>
 						</StackPanel>
-						<RichTextBox Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" FontSize="{Binding Path=FontSize, Mode=Default}" Foreground="{Binding Path=TextColor, Converter={StaticResource ColorToBrushConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="richTextBox" IsReadOnly="False" Grid.Row="2" Grid.RowSpan="1" IsEnabled="True" Style="{DynamicResource RichTextBoxStyle1}" VerticalScrollBarVisibility="Auto" AcceptsTab="True">
+                        <RichTextBox Background="{x:Null}" BorderBrush="{x:Null}" BorderThickness="0,0,0,0" FontFamily="{Binding Path=FontFamily, Mode=Default}" FontSize="{Binding Path=FontSize, Mode=Default}" Foreground="{Binding Path=TextColor, Converter={StaticResource ColorToBrushConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" x:Name="richTextBox" IsReadOnly="False" Grid.Row="2" Grid.RowSpan="1" IsEnabled="True" Style="{DynamicResource RichTextBoxStyle1}" VerticalScrollBarVisibility="Auto" AcceptsTab="True">
 							<FlowDocument/>
 						</RichTextBox>
 						<ToolBar x:Name="mainToolBar" Margin="0,5,0,0" Grid.Row="1" Background="{x:Null}" Style="{DynamicResource ToolBarStyle}" Height="30" BorderThickness="0,0,0,1" BorderBrush="{DynamicResource BrushBtnBack}" Padding="0,0,0,0">
@@ -452,28 +452,32 @@
 				<ToggleButton Cursor="Hand" HorizontalAlignment="Right" Margin="0,0,0,0" x:Name="btnExpandOptions" Style="{DynamicResource ButtonStyleArrow}" ToolTip="Expand/Collapse Settings Panel" VerticalAlignment="Center" Width="17" Height="20" Content="" Grid.Column="1" Background="{x:Null}" BorderBrush="{x:Null}" IsChecked="{Binding Path=Visibility, Converter={StaticResource VisibilityToBoolValueConv}, ElementName=bdOptions, Mode=TwoWay, UpdateSourceTrigger=Default}"/>
 				<Border Visibility="Visible" Margin="0,0,5,0" x:Name="bdOptions" BorderThickness="1,0,0,0" Padding="2,0,0,0" BorderBrush="#7F9EEA9C">
 					<StackPanel Visibility="Visible" x:Name="stackPanelOpt" Width="143" Height="Auto" d:LayoutOverrides="Height">
-						<StackPanel Height="Auto" Orientation="Horizontal">
+                        <StackPanel Height="Auto" Orientation="Horizontal" Margin="0,0,0,3">
+                            <Label HorizontalAlignment="Left" Width="78" Foreground="#FFFFFFFF" HorizontalContentAlignment="Left" Content="Display:"/>
+                            <ComboBox x:Name="cbxDisplays" Style="{DynamicResource SimpleComboBox}" Width="60" IsSynchronizedWithCurrentItem="True"/>
+                        </StackPanel>
+                        <StackPanel Height="Auto" Orientation="Horizontal">
                             <Label Width="78" Foreground="#FFFFFFFF" HorizontalContentAlignment="Left" Content="Bible 1:"/>
 							<ComboBox IsSynchronizedWithCurrentItem="True" x:Name="cbxBibleTextLanguage" Style="{DynamicResource SimpleComboBox}" Width="60"/>
 						</StackPanel>
-                        <StackPanel Height="Auto" Orientation="Horizontal" Margin="0,5,0,5">
+                        <StackPanel Height="Auto" Orientation="Horizontal" Margin="0,3,0,3">
                             <Label Width="78" Foreground="#FFFFFFFF" HorizontalContentAlignment="Left" Content="Bible 2:"/>
                             <CheckBox x:Name="chBxBibleLanguage2" VerticalAlignment="Center" Margin="0,0,2,0"></CheckBox>
                             <ComboBox IsSynchronizedWithCurrentItem="True" x:Name="cbxBibleTextLanguage2" Style="{DynamicResource SimpleComboBox}" Width="45"/>
                         </StackPanel>
-                        <StackPanel Margin="0,0,0,5" VerticalAlignment="Top" Orientation="Horizontal">
+                        <StackPanel Margin="0,0,0,3" VerticalAlignment="Top" Orientation="Horizontal">
 							<Label Width="78" Foreground="#FFFFFFFF" HorizontalContentAlignment="Left" Content="Font Size:"/>
 							<ComboBox x:Name="cbxFontSize" Style="{DynamicResource SimpleComboBox}" Width="60" IsSynchronizedWithCurrentItem="True"/>
 						</StackPanel>
-						<StackPanel HorizontalAlignment="Stretch" Height="Auto" Orientation="Horizontal" Margin="0,0,0,5">
+                        <StackPanel Margin="0,0,0,3" VerticalAlignment="Top" Orientation="Horizontal">
+                            <Label Width="78" Foreground="#FFFFFFFF" HorizontalContentAlignment="Left" Content="Font Family:"/>
+                            <ComboBox x:Name="cbxFontFamily" Style="{DynamicResource SimpleComboBox}" Width="60" IsSynchronizedWithCurrentItem="True"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Stretch" Height="Auto" Orientation="Horizontal" Margin="0,0,0,3">
 							<Label Width="78" Height="Auto" Foreground="#FFFFFFFF" HorizontalContentAlignment="Left" Content="Verses/Page:"/>
 							<ComboBox HorizontalAlignment="Left" x:Name="cbxNoOfVerses" Style="{DynamicResource SimpleComboBox}" Width="60" IsSynchronizedWithCurrentItem="True"/>
 						</StackPanel>
-						<StackPanel Height="Auto" Orientation="Horizontal" Margin="0,0,0,5">
-							<Label HorizontalAlignment="Left" Width="78" Foreground="#FFFFFFFF" HorizontalContentAlignment="Left" Content="Display:"/>
-							<ComboBox x:Name="cbxDisplays" Style="{DynamicResource SimpleComboBox}" Width="60" IsSynchronizedWithCurrentItem="True"/>
-						</StackPanel>
-						<StackPanel Height="Auto" Orientation="Horizontal" Margin="0,0,0,5">
+						<StackPanel Height="Auto" Orientation="Horizontal" Margin="0,0,0,3">
 							<TextBlock HorizontalAlignment="Left" Width="73" FontStretch="Normal" Foreground="#FFFFFFFF" Padding="0,0,5,0" Text="Background Image:" TextAlignment="Left" TextWrapping="Wrap" Margin="5,0,0,0" VerticalAlignment="Center"/>
 							<Button x:Name="btnImage" Width="43" BorderBrush="#FF12550A" BorderThickness="0,0,0,0" Content="..." Cursor="Hand" Style="{DynamicResource ButtonStyle1}" ToolTip="Browse" Foreground="#FF000000" Margin="0,0,3,0">
 								<Button.Background>
@@ -485,29 +489,34 @@
 							</Button>
 							<Button Cursor="Hand" x:Name="btnReset" Style="{DynamicResource ButtonStyle1}" ToolTip="Reset Background Image" Width="14.083" Height="Auto" FontSize="14" FontWeight="Bold" Foreground="#FF000000" Content="." Click="btnReset_Click"/>
 						</StackPanel>
-						<StackPanel Height="Auto" Orientation="Horizontal" Margin="0,0,0,5">
+						<StackPanel Height="Auto" Orientation="Horizontal" Margin="0,0,0,0">
 							<TextBlock Width="73" Foreground="#FFFFFFFF" Padding="0,0,5,0" Text="Text Color:" TextAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Margin="5,0,0,0"/>
 							<Button Cursor="Hand" x:Name="btnTextColor" Style="{DynamicResource ButtonStyle1}" ToolTip="Choose Color" Width="60" Foreground="#FF000000" Content="..." Height="25"/>
 						</StackPanel>
-						<StackPanel Height="Auto" Orientation="Horizontal" Margin="0,0,0,5">
+						<StackPanel Height="Auto" Orientation="Horizontal" Margin="0,0,0,2">
                             <TextBlock HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Width="73" Foreground="#FFFFFFFF" TextWrapping="Wrap">Selected<LineBreak/>Text Color:</TextBlock>
-                            <Button Cursor="Hand" Style="{DynamicResource ButtonStyle1}" ToolTip="Choose Color" Width="60" Height="25" Content="..." x:Name="btnSelectedTextColor" Click="btnSelectedTextColor_Click"/>
+                            <Button Cursor="Hand" Style="{DynamicResource ButtonStyle1}" ToolTip="Choose Selected Text Color" Width="60" Height="25" Content="..." x:Name="btnSelectedTextColor" Click="btnSelectedTextColor_Click"/>
 						</StackPanel>
-						<StackPanel Height="Auto" Orientation="Horizontal">
+                        <StackPanel Height="Auto" Orientation="Horizontal" Margin="0,0,0,3">
+                            <TextBlock HorizontalAlignment="Left" Margin="5,0,0,0" VerticalAlignment="Center" Width="73" Foreground="#FFFFFFFF" TextWrapping="Wrap">Text Shadow:</TextBlock>
+                            <Button Cursor="Hand" Style="{DynamicResource ButtonStyle1}" ToolTip="Text Shadow Settings" Width="60" Height="25" Content="..." x:Name="btnTextShadow" Click="btnTextShadow_Click"/>
+                        </StackPanel>
+                        <StackPanel Height="Auto" Orientation="Horizontal">
 							<TextBlock Text="Text Align:" TextWrapping="Wrap" Foreground="#FFFFFFFF" Margin="5,0,0,0" Width="63"/>
 							<StackPanel Orientation="Horizontal">
                                 <RadioButton ToolTip="Left" Foreground="#FFFFFFFF" Style="{DynamicResource RadioButtonStyle}" Width="25" Height="Auto" IsChecked="True" x:Name="radLeft">
-                                    <Image Source="Resources\TextAlignLeft.png" Stretch="None"></Image>
+                                    <Image Source="Images\ParagraphLeftJustify.png" Stretch="Uniform"></Image>
                                 </RadioButton>
                                 <RadioButton ToolTip="Center" Foreground="#FFFFFFFF" Style="{DynamicResource RadioButtonStyle}" Width="25" Height="Auto" IsChecked="False" x:Name="radCenter">
-                                    <Image Source="Resources\TextAlignCenter.png" Stretch="None"></Image>
+                                    <Image Source="Images\ParagraphCenterJustify.png" Stretch="Uniform"></Image>
                                 </RadioButton>
                                 <RadioButton ToolTip="Right" Foreground="#FFFFFFFF" Style="{DynamicResource RadioButtonStyle}" Width="25" Height="Auto" IsChecked="False" x:Name="radRight">
-                                    <Image Source="Resources\TextAlignRight.png" Stretch="None"></Image>
+                                    <Image Source="Images\ParagraphRightJustify.png" Stretch="Uniform"></Image>
                                 </RadioButton>
                             </StackPanel>
 						</StackPanel>
-                        <TextBlock HorizontalAlignment="Left" Margin="5,5,0,5" VerticalAlignment="Center" Foreground="#FFFFFFFF" Text="Live Verses Location/Size:" TextWrapping="Wrap"/>
+                       
+                        <TextBlock HorizontalAlignment="Left" Margin="5,3,0,5" VerticalAlignment="Center" Foreground="#FFFFFFFF" Text="Live Verses Location/Size:" TextWrapping="Wrap"/>
 						<Grid Height="Auto" HorizontalAlignment="Right">
 							<Grid.ColumnDefinitions>
 								<ColumnDefinition Width="Auto"/>

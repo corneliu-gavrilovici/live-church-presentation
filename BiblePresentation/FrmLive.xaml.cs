@@ -21,11 +21,30 @@ namespace LiveBiblePresentation
 
             PreviewKeyDown += FrmLive_PreviewKeyDown;
             Closing += FrmLive_Closing;
+            Loaded += FrmLive_Loaded;
+        }
+
+        public void SetShadowSettings()
+        {
+            FrmLiveSettings liveSettings = DataContext as FrmLiveSettings;
+            if (liveSettings != null)
+            {
+                dropShadowText.Color = liveSettings.ShadowColor;
+                dropShadowText.Opacity = liveSettings.ShadowOpacity;
+                dropShadowText.BlurRadius = liveSettings.ShadowBlurRadius;
+                dropShadowText.Direction = liveSettings.ShadowDirection;
+                dropShadowText.ShadowDepth = liveSettings.ShadowDepth;
+            }
         }
 
         #endregion
 
         #region Private Event Handlers
+
+        private void FrmLive_Loaded(object sender, RoutedEventArgs e)
+        {
+            SetShadowSettings();
+        }
 
         private void FrmLive_Closing(object sender, CancelEventArgs e)
         {

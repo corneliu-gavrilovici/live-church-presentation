@@ -41,6 +41,13 @@
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
+    <Compile Include="FrmShadowSettings.xaml.cs">
+      <DependentUpon>FrmShadowSettings.xaml</DependentUpon>
+    </Compile>
+    <Page Include="FrmShadowSettings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Reference Include="PresentationCore">
       <Private>False</Private>
     </Reference>
@@ -130,6 +137,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Reference Include="WPFToolkit">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.1.9.0\lib\net35\WPFToolkit.dll</HintPath>
+    </Reference>
+    <Reference Include="Xceed.Wpf.Toolkit">
+      <HintPath>..\packages\Extended.Wpf.Toolkit.1.9.0\lib\net35\Xceed.Wpf.Toolkit.dll</HintPath>
+    </Reference>
     <Resource Include="Bible.png" />
     <Resource Include="button_search.png" />
     <Resource Include="fish.png" />
@@ -163,6 +176,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Resources\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -201,12 +215,5 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\TextAlignCenter.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Resources\TextAlignLeft.png" />
-    <Resource Include="Resources\TextAlignRight.png" />
   </ItemGroup>
 </Project>

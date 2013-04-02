@@ -22,7 +22,7 @@ namespace LiveBiblePresentation
             }
         }
 
-        public Color ShadowColor
+        public System.Windows.Media.Color ShadowColor
         {
             get
             {
@@ -87,6 +87,58 @@ namespace LiveBiblePresentation
             }
         }
 
+        public double ShadowOpacity
+        {
+            get
+            {
+                return Settings.Default.ShadowOpacity;
+            }
+            set
+            {
+                Settings.Default.ShadowOpacity = value;
+                OnPropertyChanged("ShadowOpacity");
+            }
+        }
+
+        public double ShadowBlurRadius
+        {
+            get
+            {
+                return Settings.Default.ShadowBlurRadius;
+            }
+            set
+            {
+                Settings.Default.ShadowBlurRadius = value;
+                OnPropertyChanged("ShadowBlurRadius");
+            }
+        }
+
+        public double ShadowDirection
+        {
+            get
+            {
+                return Settings.Default.ShadowDirection;
+            }
+            set
+            {
+                Settings.Default.ShadowDirection = value;
+                OnPropertyChanged("ShadowDirection");
+            }
+        }
+
+        public double ShadowDepth
+        {
+            get
+            {
+                return Settings.Default.ShadowDepth;
+            }
+            set
+            {
+                Settings.Default.ShadowDepth = value;
+                OnPropertyChanged("ShadowDepth");
+            }
+        }
+
         public Visibility IsSettingsVisible
         {
             get
@@ -123,6 +175,19 @@ namespace LiveBiblePresentation
             {
                 Settings.Default.TextAlignment = value;
                 OnPropertyChanged("TextAlign");
+            }
+        }
+
+        public System.Windows.Media.FontFamily FontFamily
+        {
+            get
+            {
+                return new System.Windows.Media.FontFamily(Settings.Default.FontFamily);
+            }
+            set
+            {
+                Settings.Default.FontFamily = value.Source;
+                OnPropertyChanged("FontFamily");
             }
         }
 

@@ -40,11 +40,11 @@
 
 	<Grid Margin="0,0,0,0" x:Name="mainGrid">
 		<Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" x:Name="imgBack" Stretch="Fill"/>
-        <RichTextBox Background="{x:Null}" BorderBrush="{x:Null}" FontSize="{Binding Path=FontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding Path=TextColor, Converter={StaticResource ColorToBrushConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" x:Name="richTextBox" VerticalAlignment="Stretch" IsReadOnly="True">
+        <RichTextBox Background="{x:Null}" BorderBrush="{x:Null}" FontFamily="{Binding Path=FontFamily, Mode=Default}" FontSize="{Binding Path=FontSize, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="{Binding Path=TextColor, Converter={StaticResource ColorToBrushConverter}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" x:Name="richTextBox" VerticalAlignment="Stretch" IsReadOnly="True">
             <RichTextBox.Effect>
-                <DropShadowEffect ShadowDepth="1"
+                <DropShadowEffect x:Name="dropShadowText" ShadowDepth="3"
                         Direction="330"
-                        Color="Black"
+                        Color="WhiteSmoke"
                         Opacity="0.5"
                         BlurRadius="4"/>
             </RichTextBox.Effect>

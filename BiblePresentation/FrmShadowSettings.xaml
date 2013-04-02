@@ -1,0 +1,38 @@
+﻿<Window x:Class="LiveBiblePresentation.FrmShadowSettings"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        Title="Text Shadow Settings" Height="265" Width="250" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" >
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="29"/>
+            <RowDefinition Height="29"/>
+            <RowDefinition Height="29"/>
+            <RowDefinition Height="29"/>
+            <RowDefinition Height="29"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Color:"/>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Opacity:" Grid.Row="1"/>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Blur Radius:" Grid.Row="2"/>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Direction:" Grid.Row="3"/>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="Shadow Depth:" Grid.Row="4" Margin="0,0,5,0"/>
+        <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="GO LIVE to preview!" Grid.Row="5" Grid.ColumnSpan="2" Foreground="Red"/>
+        
+        <xctk:ColorPicker x:Name="btnColor"  Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+        <xctk:DoubleUpDown x:Name="txtOpacity" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" FormatString="P0" Value="0.5" Increment="0.01" Maximum="1" Minimum="0" VerticalAlignment="Center" />
+        <xctk:DoubleUpDown x:Name="txtBlurRadius" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" FormatString="N0" Value="5" Increment="1" Maximum="100" Minimum="0" VerticalAlignment="Center" />
+        <xctk:DoubleUpDown x:Name="txtDirection" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" FormatString="N0" Value="330" Increment="1" VerticalAlignment="Center" />
+        <xctk:DoubleUpDown x:Name="txtShadowDepth" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" FormatString="N0" Value="5" Increment="1" VerticalAlignment="Center" />
+
+        <Button Content="Reset" x:Name="btnReset"  Grid.Column="0" HorizontalAlignment="Left" Grid.Row="6" Width="60"/>
+        <Button Content="OK" x:Name="btnOK" Grid.Column="0" Grid.ColumnSpan="2" Margin="0,0,65,0"  HorizontalAlignment="Right" Grid.Row="6" Width="60"/>
+        <Button Content="Cancel" x:Name="btnCancel"  Grid.Column="1" HorizontalAlignment="Right" Grid.Row="6" Width="60"/>
+    </Grid>
+</Window>
